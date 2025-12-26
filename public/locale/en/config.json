@@ -2005,6 +2005,7 @@
         "PublicAwareness": "Public Awareness",
         "PublicGrid": "Public Grid",
         "PushTheLimit": "Push The Limit",
+        "UseEdge": "Use Edge",
         "Qty": "Qty",
         "Quality": {
             "label": "Quality",
@@ -2720,6 +2721,7 @@
                 "Modifier": "Sum of all modifiers applied to dice pool",
                 "Pool": "Amount of dice to roll",
                 "PushTheLimit": "Apply push the limit edge rules",
+                "UseEdge": "You may declare the use of Edge before rolling for any one test (or one interval roll on an Extended Test). You may add a number of extra dice equal to your full Edge attribute to the dice pool. All dice (not just Edge dice) rolled on this test are subject to the Rule of Six (p. 62), meaning that if you roll a 6, you count it as a hit and roll it again",
                 "RollMode": "FoundryVTT chat message roll visibility",
                 "Threshold": "Calculated threshold value"
             },
