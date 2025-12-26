@@ -43,7 +43,8 @@ export const Skills = () => new FixedTypeObjectField(
     {
         required: true,
         initial: {
-            // Combat Skills
+            // Agility
+            //Combat
             archery: skill({ attribute: 'agility', id: 'archery' }),
             automatics: skill({ attribute: 'agility', group: 'Firearms', id: 'automatics' }),
             blades: skill({ attribute: 'agility', group: 'Close Combat', id: 'blades', }),
@@ -55,18 +56,19 @@ export const Skills = () => new FixedTypeObjectField(
             pistols: skill({ attribute: 'agility', group: 'Firearms', id: 'pistols' }),
             throwing_weapons: skill({ attribute: 'agility', group: 'Close Combat', id: 'throwing_weapons' }),
             unarmed_combat: skill({ attribute: 'agility', group: 'Close Combat', id: 'unarmed_combat' }),
+            //Non Combat
+            gymnastics: skill({ attribute: 'agility', group: 'Athletics', id: 'gymnastics' }),
+            palming: skill({ attribute: 'agility', group: 'Stealth', canDefault: false, id: 'palming' }),
+            forgery: skill({ attribute: 'agility', id: 'forgery' }),
+            locksmith: skill({ attribute: 'agility', id: 'locksmith' }),
+            infiltration: skill({ attribute: 'agility', group: 'Stealth', canDefault: false, id: 'infiltration' }),
 
             // Physical Skills
             disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),
-            diving: skill({ attribute: 'body', id: 'diving' }),
-            escape_artist: skill({ attribute: 'agility', id: 'escape_artist' }),
-            flight: skill({ attribute: 'agility', id: 'flight', canDefault: false, hidden: true }),
-            free_fall: skill({ attribute: 'body', id: 'free_fall' }),
-            gymnastics: skill({ attribute: 'agility', group: 'Athletics', id: 'gymnastics' }),
-            palming: skill({ attribute: 'agility', group: 'Stealth', canDefault: false, id: 'palming' }),
+            diving: skill({ attribute: 'body', id: 'diving' }),      
+            free_fall: skill({ attribute: 'body', id: 'free_fall' }),          
             perception: skill({ attribute: 'intuition', id: 'perception' }),
-            running: skill({ attribute: 'strength', group: 'Athletics', id: 'running' }),
-            sneaking: skill({ attribute: 'agility', group: 'Stealth', id: 'sneaking' }),
+            running: skill({ attribute: 'strength', group: 'Athletics', id: 'running' }),        
             survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),
             swimming: skill({ attribute: 'strength', group: 'Athletics', id: 'swimming' }),
             tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
