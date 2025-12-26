@@ -68,6 +68,11 @@ export const Skills = () => new FixedTypeObjectField(
             diving: skill({ attribute: 'body', id: 'diving' }), 
             parachuting skill({ attribute: 'body', id: 'parachuting' }), 
 
+            //Strenght
+            climbing: skill({ attribute: 'strength', group: 'Athletics', id: 'climbing' }),   
+            running: skill({ attribute: 'strength', group: 'Athletics', id: 'running' }),    
+            swimming: skill({ attribute: 'strength', group: 'Athletics', id: 'swimming' }),
+
             //Reaction
              // Vehicle Skills
             pilot_aerospace: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aerospace' }),
@@ -81,9 +86,9 @@ export const Skills = () => new FixedTypeObjectField(
             // Physical Skills
             disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),     
             perception: skill({ attribute: 'intuition', id: 'perception' }),
-            running: skill({ attribute: 'strength', group: 'Athletics', id: 'running' }),        
+                
             survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),
-            swimming: skill({ attribute: 'strength', group: 'Athletics', id: 'swimming' }),
+            
             tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
 
             // Social Skills
