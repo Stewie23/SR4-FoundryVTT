@@ -83,12 +83,6 @@ export const Skills = () => new FixedTypeObjectField(
             pilot_exotic_vehicle: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_exotic_vehicle' }), // how to deal with exotic vehicles?
             dodge: skill({ attribute: 'reaction', id: 'dodge' }), 
 
-            // Physical Skills
-            disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),     
-            perception: skill({ attribute: 'intuition', id: 'perception' }),             
-            survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),          
-            tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
-
             // Charisma
             con: skill({ attribute: 'charisma', group: 'Acting', id: 'con' }),
             etiquette: skill({ attribute: 'charisma', group: 'Influence', id: 'etiquette' }),
@@ -97,11 +91,21 @@ export const Skills = () => new FixedTypeObjectField(
             leadership: skill({ attribute: 'charisma', group: 'Influence', id: 'leadership' }),
             negotiation: skill({ attribute: 'charisma', group: 'Influence', id: 'negotiation' }),
 
+            // Intutition
+            artisan: skill({ attribute: 'intuition', canDefault: false, id: 'artisan' }),
+            assensing: skill({ attribute: 'intuition', canDefault: false, id: 'assensing' }),
+            disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),  
+            navigation: skill({ attribute: 'intuition', group: 'Outdoors', id: 'navigation' }),   
+            perception: skill({ attribute: 'intuition', id: 'perception' }),             
+            survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),  
+            shadowing: skill({ attribute: 'intuition',group: 'Stealth' id: 'shadowing' }),      
+            tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
+
             // Magic Skills
             alchemy: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'alchemy' }),
             arcana: skill({ attribute: 'logic', canDefault: false, id: 'arcana' }),
             artificing: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'artificing' }),
-            assensing: skill({ attribute: 'intuition', canDefault: false, id: 'assensing' }),
+            
             astral_combat: skill({ attribute: 'willpower', canDefault: false, id: 'astral_combat' }),
             banishing: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'banishing' }),
             binding: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'binding' }),
@@ -123,7 +127,7 @@ export const Skills = () => new FixedTypeObjectField(
             nautical_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'nautical_mechanic' }),
             animal_handling: skill({ attribute: 'charisma', id: 'animal_handling' }),
             armorer: skill({ attribute: 'logic', id: 'armorer' }),
-            artisan: skill({ attribute: 'intuition', canDefault: false, id: 'artisan' }),
+       
             biotechnology: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'biotechnology' }),
             chemistry: skill({ attribute: 'logic', canDefault: false, id: 'chemistry' }),
             computer: skill({ attribute: 'logic', group: 'Electronics', id: 'computer' }),
@@ -135,7 +139,7 @@ export const Skills = () => new FixedTypeObjectField(
             hacking: skill({ attribute: 'logic', group: 'Cracking', id: 'hacking' }),
             hardware: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'hardware' }),
             medicine: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'medicine' }),
-            navigation: skill({ attribute: 'intuition', group: 'Outdoors', id: 'navigation' }),
+           
             software: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'software' }),
         }
     }
