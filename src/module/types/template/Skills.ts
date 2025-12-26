@@ -101,20 +101,34 @@ export const Skills = () => new FixedTypeObjectField(
             shadowing: skill({ attribute: 'intuition',group: 'Stealth' id: 'shadowing' }),      
             tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
 
-            //Willppwer
+            //Willpower
             astral_combat: skill({ attribute: 'willpower', canDefault: false, id: 'astral_combat' }),
             surival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),
 
+            //Logic
+            aeronautics_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'aeronautics_mechanic' }),
+            automotive_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'automotive_mechanic' }),
+            industrial_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'industrial_mechanic' }),
+            nautical_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'nautical_mechanic' }),
+            arcana: skill({ attribute: 'logic', id: 'arcana' }),    
+            armorer: skill({ attribute: 'logic', id: 'armorer' }),      
+            chemistry: skill({ attribute: 'logic', canDefault: false, id: 'chemistry' }),
+            computer: skill({ attribute: 'logic', group: 'Electronics', id: 'computer' }),
+            cybercombat: skill({ attribute: 'logic', group: 'Cracking', id: 'cybercombat' }),
+            cybertechnology: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'cybertechnology' }),
+            datasearch skill({ attribute: 'logic', id: 'datasearch' }),  
+            demolitions: skill({ attribute: 'logic', id: 'demolitions' }),
+            electronic_warfare: skill({ attribute: 'logic', group: 'Cracking', canDefault: false, id: 'electronic_warfare' }),
+            first_aid: skill({ attribute: 'logic', group: 'Biotech', id: 'first_aid' }),
+            hacking: skill({ attribute: 'logic', group: 'Cracking', id: 'hacking' }),
+            hardware: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'hardware' }),
+            medicine: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'medicine' }),          
+            software: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'software' }),
+
             // Magic Skills
-            alchemy: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'alchemy' }),
-            arcana: skill({ attribute: 'logic', canDefault: false, id: 'arcana' }),
-            artificing: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'artificing' }),
-            
-           
             banishing: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'banishing' }),
             binding: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'binding' }),
             counterspelling: skill({ attribute: 'magic', group: 'Sorcery', canDefault: false, id: 'counterspelling' }),
-            disenchanting: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'disenchanting' }),
             ritual_spellcasting: skill({ attribute: 'magic', group: 'Sorcery', canDefault: false, id: 'ritual_spellcasting' }),
             spellcasting: skill({ attribute: 'magic', group: 'Sorcery', canDefault: false, id: 'spellcasting' }),
             summoning: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'summoning' }),
@@ -123,27 +137,6 @@ export const Skills = () => new FixedTypeObjectField(
             compiling: skill({ attribute: 'resonance', group: 'Tasking', canDefault: false, id: 'compiling' }),
             decompiling: skill({ attribute: 'resonance', group: 'Tasking', canDefault: false, id: 'decompiling' }),
             registering: skill({ attribute: 'resonance', group: 'Tasking', canDefault: false, id: 'registering' }),
-
-            // Technical Skills
-            aeronautics_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'aeronautics_mechanic' }),
-            automotive_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'automotive_mechanic' }),
-            industrial_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'industrial_mechanic' }),
-            nautical_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'nautical_mechanic' }),
-            armorer: skill({ attribute: 'logic', id: 'armorer' }),
-       
-            biotechnology: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'biotechnology' }),
-            chemistry: skill({ attribute: 'logic', canDefault: false, id: 'chemistry' }),
-            computer: skill({ attribute: 'logic', group: 'Electronics', id: 'computer' }),
-            cybercombat: skill({ attribute: 'logic', group: 'Cracking', id: 'cybercombat' }),
-            cybertechnology: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'cybertechnology' }),
-            demolitions: skill({ attribute: 'logic', id: 'demolitions' }),
-            electronic_warfare: skill({ attribute: 'logic', group: 'Cracking', canDefault: false, id: 'electronic_warfare' }),
-            first_aid: skill({ attribute: 'logic', group: 'Biotech', id: 'first_aid' }),
-            hacking: skill({ attribute: 'logic', group: 'Cracking', id: 'hacking' }),
-            hardware: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'hardware' }),
-            medicine: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'medicine' }),
-           
-            software: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'software' }),
         }
     }
 );
