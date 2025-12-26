@@ -99,43 +99,49 @@ export const TestCreator = {
      * @param document The document to use for retrieving source values defined within the action.
      * @param options See TestOptions documentation.
      */
-    fromAction: async function(action: ActionRollType, document: SR5Actor | SR5Item, options: TestOptions = {}): Promise<SuccessTest | undefined> {
-        if (!action.test) {
-            action.test = 'SuccessTest';
-            console.warn(`Shadowrun 5e | An action without a defined test handler defaulted to ${'SuccessTest'}`);
-        }
+    fromAction: async function(
+    action: ActionRollType,
+    document: SR5Actor | SR5Item,
+    options: TestOptions = {}
+    ): Promise<SuccessTest | undefined> {
 
-        if (!Object.hasOwn(game.sr4.tests, action.test)) {
-            console.error(`Shadowrun 5e | Test registration for test ${action.test} is missing`);
-            return;
-        }
+    if (!action.test) {
+        action.test = 'SuccessTest';
+        console.warn(`SR4 | An action without a defined test handler defaulted to SuccessTest`);
+    }
 
-        // Any action item will return a list of values to create the test pool from.
-        const cls = TestCreator._getTestClass(action.test);
-        const data = TestCreator._prepareTestDataWithAction(action, document, TestCreator._minimalTestData());
-        const actor = document instanceof SR5Actor ? document : undefined;
-        const item = document instanceof SR5Item ? document : undefined;
-        const documents = {actor, item};
+    // DON'T use game.sr4.tests - it may not exist.
+    const cls = TestCreator._getTestClass(action.test);
+    if (!cls) {
+        console.error(`SR4 | Test registration for test '${action.test}' is missing (TestCreator._getTestClass returned undefined)`);
+        return;
+    }
 
-        return new cls(data, documents, options);
+    // Any action item will return a list of values to create the test pool from.
+    const data = TestCreator._prepareTestDataWithAction(action, document, TestCreator._minimalTestData());
+
+    const actor = document instanceof SR5Actor ? document : undefined;
+    const item = document instanceof SR5Item ? document : undefined;
+    const documents = { actor, item };
+
+    return new cls(data, documents, options);
     },
+        /**
+         * Create a test using an Action item stored in any collection
+         * @param packName The package / compendium name to search for the action
+         * @param actionName The items name within the given packName
+         * @param document The document used to roll the test with
+         * @param options General TestOptions
+         */
+        fromPackAction: async function(packName: string, actionName: string, document: SR5Actor | SR5Item, options: TestOptions = {}): Promise<SuccessTest|undefined> {
+            const item = await PackActionFlow.getPackAction(packName, actionName);
+            if (!item) {
+                console.error(`Shadowrun5 | The pack ${packName} doesn't include an item ${actionName}`);
+                return;
+            }
 
-    /**
-     * Create a test using an Action item stored in any collection
-     * @param packName The package / compendium name to search for the action
-     * @param actionName The items name within the given packName
-     * @param document The document used to roll the test with
-     * @param options General TestOptions
-     */
-    fromPackAction: async function(packName: string, actionName: string, document: SR5Actor | SR5Item, options: TestOptions = {}): Promise<SuccessTest|undefined> {
-        const item = await PackActionFlow.getPackAction(packName, actionName);
-        if (!item) {
-            console.error(`Shadowrun5 | The pack ${packName} doesn't include an item ${actionName}`);
-            return;
-        }
-
-        return TestCreator.fromItem(item, document, options);
-    },
+            return TestCreator.fromItem(item, document, options);
+        },
 
     /**
      * Create a test implementation from a past test included within a message
