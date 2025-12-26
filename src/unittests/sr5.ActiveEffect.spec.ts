@@ -701,44 +701,69 @@ export const shadowrunSR5ActiveEffect = (context: QuenchBatchContext) => {
             assert.equal(test.data.damage.value, 3);
         });
 
-        it('TEST modify attribute and limit on SkillTest', async () => {
-            const actor = await factory.createActor({ type: 'character' });
-            await actor.createEmbeddedDocuments('ActiveEffect', [{
-                name: 'Test Effect',
-                system: { applyTo: 'test_all' },
-                changes: [
-                    { key: 'data.limit', value: '3', mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM },
-                    { key: 'data.pool', value: '3', mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM }
-                ]
-            }]);
-
-            const action = DataDefaults.createData('action_roll', { test: SkillTest.name, limit: { attribute: 'social' } });
-            const test = await TestCreator.fromAction(action, actor, { showDialog: false, showMessage: false }) as SkillTest;
-            if (!test) throw new Error('Failed to create test from action.');
-
-            // Simulate relevant part of #execute
-            test.effects.applyAllEffects();
-
-            test.prepareAttributeSelection();
-            test.prepareLimitSelection();
-            test.prepareBaseValues();
-            test.calculateBaseValues();
-
-            assert.strictEqual(test.limit.value, actor.getLimit('social')!.value + 3);
-            assert.strictEqual(test.pool.value, 3);
-
-            // Simulate change of selection
-            test.data.attribute = 'body';
-            test.data.limitSelection = 'physical';
-
-            test.prepareAttributeSelection();
-            test.prepareLimitSelection();
-            test.prepareBaseValues();
-            test.calculateBaseValues();
-
-            assert.strictEqual(test.limit.value, actor.getLimit('physical')!.value + 3);
+        it('TEST modify attribute on SkillTest (SR4: no limits)', async () => {
+        // Make attribute swap actually visible in the pool:
+        const actor = await factory.createActor({
+            type: 'character',
+            system: {
+            attributes: {
+                agility: { base: 4 },
+                body: { base: 2 }
+            }
+            }
         });
-    });
+
+        // In SR4 we keep "pool" as a modifiable test value; we remove limit entirely.
+        await actor.createEmbeddedDocuments('ActiveEffect', [{
+            name: 'Test Effect',
+            system: { applyTo: 'test_all' },
+            changes: [
+            { key: 'data.pool', value: '3', mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM }
+            ]
+        }]);
+
+        // Create a SkillTest with a starting attribute (agility) - no limit field.
+        const action = DataDefaults.createData('action_roll', {
+            test: SkillTest.name,
+            attribute: 'agility'
+        });
+
+        const test = await TestCreator.fromAction(action, actor, { showDialog: false, showMessage: false }) as SkillTest;
+        if (!test) throw new Error('Failed to create test from action.');
+
+        // Simulate relevant part of #execute
+        test.effects.applyAllEffects();
+
+        // Build base values once with initial attribute
+        test.prepareAttributeSelection();
+        test.prepareBaseValues();
+        test.calculateBaseValues();
+
+        // Assert pool got the effect modifier
+        const effectSum = test.pool.mod
+            .filter(m => m.name === 'Test Effect')
+            .reduce((acc, m) => acc + m.value, 0);
+
+        assert.strictEqual(effectSum, 3);
+
+        // Assert pool contains the selected attribute contribution (agility)
+        const agi = actor.getAttribute('agility')!;
+        assert.isOk(test.pool.mod.find(m => m.name === agi.label && m.value === agi.value));
+
+        // Simulate change of selection: switch to body (SR4 supports swapping linked attribute)
+        test.data.attribute = 'body';
+
+        test.prepareAttributeSelection();
+        test.prepareBaseValues();
+        test.calculateBaseValues();
+
+        const bod = actor.getAttribute('body')!;
+        // New attribute must be present…
+        assert.isOk(test.pool.mod.find(m => m.name === bod.label && m.value === bod.value));
+        // …and the previous attribute should be gone (since SkillTest swaps it)
+        assert.isNotOk(test.pool.mod.find(m => m.name === agi.label));
+        });
+     });
     
     describe('AdvanceEffects apply modification based on test categories', () => {
         it('Should apply modifier to a single category only', async () => {
