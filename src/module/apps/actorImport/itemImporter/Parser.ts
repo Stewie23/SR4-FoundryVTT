@@ -44,7 +44,7 @@ export abstract class Parser<T extends ItemSystems> {
     static compendiumCache = new Map<string, CacheType>();
 
     protected createItem(itemData: BaseType) {
-        type FlagType = NonNullable<NonNullable<Item.CreateData['flags']>['shadowrun5e']>;
+        type FlagType = NonNullable<NonNullable<Item.CreateData['flags']>['sr4']>;
         return {
             name: itemData.fullname ?? itemData.name ?? Parser.DEFAULT_NAME,
             type: this.parseType,
