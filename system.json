@@ -16,7 +16,34 @@
   "...": "keep the rest of your existing fields (documentTypes, esmodules, styles, languages, etc.)",
 
   "esmodules": ["dist/bundle.js"],
-"styles": ["dist/bundle.css"],
+  "styles": ["dist/bundle.css"],
+  "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "dist/locale/en/config.json"
+        },
+        {
+            "lang": "de",
+            "name": "Deutsch",
+            "path": "dist/locale/de/config.json"
+        },
+        {
+            "lang": "pt-BR",
+            "name": "Português (Brasil)",
+            "path": "dist/locale/pt-BR/config.json"
+        },
+        {
+            "lang": "fr",
+            "name": "Français",
+            "path": "dist/locale/fr/config.json"
+        },
+        {
+            "lang": "ko",
+            "name": "Korean",
+            "path": "dist/locale/ko/config.json"
+        }
+    ],
 
 
   "documentTypes": {
