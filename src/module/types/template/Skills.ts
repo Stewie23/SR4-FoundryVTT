@@ -123,7 +123,6 @@ export const Skills = () => new FixedTypeObjectField(
             first_aid: skill({ attribute: 'logic', group: 'Biotech', id: 'first_aid' }),
             hacking: skill({ attribute: 'logic', group: 'Cracking', id: 'hacking' }),
             hardware: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'hardware' }),
-            locksmith: skill({ attribute: 'logic', canDefault: false, id: 'locksmith' }),
             medicine: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'medicine' }),
             navigation: skill({ attribute: 'intuition', group: 'Outdoors', id: 'navigation' }),
             software: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'software' }),
