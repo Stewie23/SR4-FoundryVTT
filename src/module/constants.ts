@@ -10,7 +10,7 @@
  * Other than this file config.ts exists and only contains mappings between fixed names/ids and translation labels.
  *
  */
-export const SYSTEM_NAME = 'shadowrun5e' as const;
+export const SYSTEM_NAME = 'sr4' as const;
 export const SYSTEM_SOCKET = `system.${SYSTEM_NAME}`;
 export const FLAGS = {
     KEY_DATA_VERSION: 'systemMigrationVersion',
