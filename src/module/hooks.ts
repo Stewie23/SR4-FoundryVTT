@@ -189,7 +189,7 @@ ___________________
 ===================
 `);
         // Create a shadowrun5e namespace within the game global
-        game['shadowrun5e'] = {
+        game['sr4'] = {
             canvas: {},
             /**
              * System level Document implementations.
