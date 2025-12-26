@@ -101,12 +101,16 @@ export const Skills = () => new FixedTypeObjectField(
             shadowing: skill({ attribute: 'intuition',group: 'Stealth' id: 'shadowing' }),      
             tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
 
+            //Willppwer
+            astral_combat: skill({ attribute: 'willpower', canDefault: false, id: 'astral_combat' }),
+            surival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),
+
             // Magic Skills
             alchemy: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'alchemy' }),
             arcana: skill({ attribute: 'logic', canDefault: false, id: 'arcana' }),
             artificing: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'artificing' }),
             
-            astral_combat: skill({ attribute: 'willpower', canDefault: false, id: 'astral_combat' }),
+           
             banishing: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'banishing' }),
             binding: skill({ attribute: 'magic', group: 'Conjuring', canDefault: false, id: 'binding' }),
             counterspelling: skill({ attribute: 'magic', group: 'Sorcery', canDefault: false, id: 'counterspelling' }),
@@ -125,7 +129,6 @@ export const Skills = () => new FixedTypeObjectField(
             automotive_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'automotive_mechanic' }),
             industrial_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'industrial_mechanic' }),
             nautical_mechanic: skill({ attribute: 'logic', group: 'Engineering', canDefault: false, id: 'nautical_mechanic' }),
-            animal_handling: skill({ attribute: 'charisma', id: 'animal_handling' }),
             armorer: skill({ attribute: 'logic', id: 'armorer' }),
        
             biotechnology: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'biotechnology' }),
