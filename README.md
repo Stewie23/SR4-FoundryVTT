@@ -1,50 +1,55 @@
-# Shadowrun5e for Foundry Virtual Tabletop
-[Manifest](https://raw.githubusercontent.com/SR5-FoundryVTT/SR5-FoundryVTT/master/system.json)
+Shadowrun 4th Edition for Foundry Virtual Tabletop
 
-Come on the FoundryVTT discord shadowrun5e channel and have a chat. :)
+This is an in-development game system for Shadowrun 4th Edition for Foundry Virtual Tabletop.
 
-We will always be happy to look at a Pull Request if there are features or bugs you'd like to work on.
+It is currently a fork and adaptation of the Shadowrun 5th Edition Foundry system, with the goal of providing a playable and maintainable SR4 ruleset inside Foundry.
 
-Should you need an older version you can check [releases](https://github.com/SR5-FoundryVTT/SR5-FoundryVTT/releases) and reference the system.json on each release instead of FoundryVTTs system marketplace.
+Upstream project (SR5):
+https://github.com/SR5-FoundryVTT/SR5-FoundryVTT
 
-## General Information (read before playing)
-It's complicated, it's a work in progress, but it is _kinda_ stable. We try to break as little as possible.
+Project Status
 
-#### Currently supported rule sections
-- All character types
-- Most equipment types
-- Partially automated combat
-- Partially automated matrix and technomancy
-- Partially automated magic
-- Partially supported rigging
+Early development / work in progress.
 
-## Learn more
-To learn more about the features of the system and how to use them, please visit [our wiki](http://sr5-foundryvtt.privateworks.com/index.php/Main_Page).
+The system loads and runs in Foundry
 
-## Report issues
-Found some problem? Please report it in our issue tracker or [on discord](https://discord.com/channels/170995199584108546/715689255606681660).
+Actor sheets and skills are functional
 
-## Want to help out?
-Great, thanks :) Please check [this wiki](https://github.com/SR5-FoundryVTT/SR5-FoundryVTT/wiki/How-to-help-out) for more information.
+Rules automation is incomplete and changing
 
-There is also the [README-dev.md](https://github.com/SR5-FoundryVTT/SR5-FoundryVTT/blob/master/README-DEV.md) for development.
+Expect missing features, rough edges, and breaking changes and stuff still using 5th Edition thing, because i did not get to change them
 
-## Licenses
+This project is not yet recommended for long-running campaigns unless you are comfortable updating worlds and data manually.
 
-- **Font Awesome**  
-  Icons provided by [Font Awesome](https://fontawesome.com).
-  The system uses a Font Awesome Pro license provided by one of our system authors ([Timothy J. Lanza](https://github.com/tjlanza)).
 
-- **Bella Carvalho**  
-  Additional icons created by [Bella Carvalho](https://www.behance.net/bellcarvalho).  
-  Licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+Licenses
 
-- **Nodesto Font**  
-  Provided by Solbera and Ryrok.  
-  Source: [solbera-dnd-fonts](https://github.com/jonathonf/solbera-dnd-fonts)  
-  Licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+Font Awesome
+Icons provided by Font Awesome
+.
+The system uses a Font Awesome Pro license provided by one of the system authors
+(Timothy J. Lanza
+).
 
----
+Bella Carvalho
+Additional icons created by Bella Carvalho
+.
+Licensed under
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+.
 
-**Shadowrun** is a registered trademark and/or trademark of **The Topps Company, Inc.** in the United States and/or other countries.  
-This is a **fan project** and we are in no way associated with Topps or Catalyst Game Labs.
+Nodesto Font
+Provided by Solbera and Ryrok.
+Source: https://github.com/jonathonf/solbera-dnd-fonts
+
+Licensed under
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+.
+
+Trademark Notice
+
+Shadowrun is a registered trademark and/or trademark of
+The Topps Company, Inc. in the United States and/or other countries.
+
+This is a fan-made, non-commercial project.
+It is not affiliated with, endorsed by, or associated with Topps or Catalyst Game Labs.
