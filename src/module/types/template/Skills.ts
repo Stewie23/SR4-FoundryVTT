@@ -68,6 +68,16 @@ export const Skills = () => new FixedTypeObjectField(
             diving: skill({ attribute: 'body', id: 'diving' }), 
             parachuting skill({ attribute: 'body', id: 'parachuting' }), 
 
+            //Reaction
+             // Vehicle Skills
+            pilot_aerospace: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aerospace' }),
+            pilot_aircraft: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aircraft' }),
+            pilot_walker: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_walker' }),
+            pilot_ground_craft: skill({ attribute: 'reaction', id: 'pilot_ground_craft' }),
+            pilot_water_craft: skill({ attribute: 'reaction', id: 'pilot_water_craft' }),
+            pilot_exotic_vehicle: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_exotic_vehicle' }), // how to deal with exotic vehicles?
+            dodge: skill({ attribute: 'reaction', id: 'dodge' }), 
+
             // Physical Skills
             disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),     
             perception: skill({ attribute: 'intuition', id: 'perception' }),
@@ -126,14 +136,6 @@ export const Skills = () => new FixedTypeObjectField(
             medicine: skill({ attribute: 'logic', group: 'Biotech', canDefault: false, id: 'medicine' }),
             navigation: skill({ attribute: 'intuition', group: 'Outdoors', id: 'navigation' }),
             software: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'software' }),
-
-            // Vehicle Skills
-            pilot_aerospace: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aerospace' }),
-            pilot_aircraft: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aircraft' }),
-            pilot_walker: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_walker' }),
-            pilot_ground_craft: skill({ attribute: 'reaction', id: 'pilot_ground_craft' }),
-            pilot_water_craft: skill({ attribute: 'reaction', id: 'pilot_water_craft' }),
-            pilot_exotic_vehicle: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_exotic_vehicle' }), // how to deal with exotic vehicles?
         }
     }
 );
