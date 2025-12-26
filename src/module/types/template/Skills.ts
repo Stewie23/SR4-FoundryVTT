@@ -74,7 +74,7 @@ export const Skills = () => new FixedTypeObjectField(
             swimming: skill({ attribute: 'strength', group: 'Athletics', id: 'swimming' }),
 
             //Reaction
-             // Vehicle Skills
+            // Vehicle Skills
             pilot_aerospace: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aerospace' }),
             pilot_aircraft: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aircraft' }),
             pilot_walker: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_walker' }),
@@ -85,21 +85,17 @@ export const Skills = () => new FixedTypeObjectField(
 
             // Physical Skills
             disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),     
-            perception: skill({ attribute: 'intuition', id: 'perception' }),
-                
-            survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),
-            
+            perception: skill({ attribute: 'intuition', id: 'perception' }),             
+            survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),          
             tracking: skill({ attribute: 'intuition', group: 'Outdoors', id: 'tracking' }),
 
-            // Social Skills
+            // Charisma
             con: skill({ attribute: 'charisma', group: 'Acting', id: 'con' }),
             etiquette: skill({ attribute: 'charisma', group: 'Influence', id: 'etiquette' }),
-            impersonation: skill({ attribute: 'charisma', group: 'Acting', id: 'impersonation' }),
             instruction: skill({ attribute: 'charisma', id: 'instruction' }),
             intimidation: skill({ attribute: 'charisma', id: 'intimidation' }),
             leadership: skill({ attribute: 'charisma', group: 'Influence', id: 'leadership' }),
             negotiation: skill({ attribute: 'charisma', group: 'Influence', id: 'negotiation' }),
-            performance: skill({ attribute: 'charisma', group: 'Acting', id: 'performance' }),
 
             // Magic Skills
             alchemy: skill({ attribute: 'magic', group: 'Enchanting', canDefault: false, id: 'alchemy' }),
