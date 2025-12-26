@@ -1,66 +1,96 @@
 name: Release Creation
 
 on:
-    release:
-        types: [published]
+  release:
+    types: [published]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
 
-            - name: Install prerequisites
-              run: sudo apt-get install moreutils
+    # Needed so the workflow can upload/replace assets on the GitHub Release
+    permissions:
+      contents: write
 
-            - name: Modify System Manifest With Release-Specific Values
-              env:
-                  URL: https://github.com/${{github.repository}}
-                  MANIFEST: https://github.com/${{github.repository}}/releases/latest/download/system.json
-                  DOWNLOAD: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/shadowrun5e.zip
-                  VERSION: ${{github.event.release.tag_name}}
-              run: |
-                    sudo apt-get install moreutils
-                    jq --arg url $URL '.url=$url' system.json | sponge system.json
-                    jq --arg manifest $MANIFEST '.manifest=$manifest' system.json | sponge system.json
-                    jq --arg download $DOWNLOAD '.download=$download' system.json | sponge system.json
-                    jq --arg version $VERSION '.version=$version' system.json | sponge system.json
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Read System manifest for later use
-              run: |
-                    cat system.json
-                    echo "MANIFEST_JSON=$(jq -c . < system.json)" >> $GITHUB_ENV
+      - name: Install prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq moreutils zip
 
-            - name: Build and package release artifacts
-              run: |
-                  npm ci
-                  gulp build
-                  npm run build:db
-                  zip -r ./shadowrun5e.zip system.json template.json LICENSE README.md README-DEV.md dist/ packs/ --exclude "packs/_source/*"
+      # Optional, but nice for consistency/caching:
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      #     cache: 'npm'
 
-            - name: Update Release with Files
-              uses: ncipollo/release-action@v1
-              with:
-                  makeLatest: false # Must be false, to allow test releases using this workflow.
-                  allowUpdates: true # Must be true, to allow updating existing releases
-                  name: ${{ github.event.release.name }}
-                  draft: false
-                  prerelease: false
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  artifacts: './system.json, ./shadowrun5e.zip'
-                  tag: ${{ github.event.release.tag_name }}
-                  body: ${{ github.event.release.body }}
+      - name: Set variables
+        run: |
+          # Foundry system id (must match system.json "id")
+          echo "SYS_ID=sr4" >> $GITHUB_ENV
 
-            - name: Deploy Release
-              if: github.event.release.prerelease == false
-              uses: fjogeleit/http-request-action@v1
-              env:
-                  MINIMUM: ${{ fromJson(env.MANIFEST_JSON).compatibility.minimum }}
-                  VERIFIED: ${{ fromJson(env.MANIFEST_JSON).compatibility.verified }}
-                  MAXIMUM: ${{ fromJson(env.MANIFEST_JSON).compatibility.maximum }}
-              with:
-                  url: 'https://api.foundryvtt.com/_api/packages/release_version'
-                  method: 'POST'
-                  contentType: 'application/json'
-                  customHeaders: '{"Authorization": "${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}"}'
-                  data: '{"id": "shadowrun5e", "release":{"version":"v${{github.event.release.tag_name}}","manifest":"https://github.com/SR5-FoundryVTT/SR5-FoundryVTT/releases/latest/download/system.json","notes":"https://github.com/SR5-FoundryVTT/SR5-FoundryVTT/releases/tag/${{github.event.release.tag_name}}","compatibility":{"minimum":"${{ env.MINIMUM }}","verified":"${{ env.VERIFIED }}","maximum":"${{ env.MAXIMUM }}"}}}'
+          # Your tags are like v1.2.3 already -> do NOT prepend another 'v'
+          echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+
+          echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+          echo "MANIFEST_URL=https://github.com/${{ github.repository }}/releases/latest/download/system.json" >> $GITHUB_ENV
+
+      - name: Modify System Manifest With Release-Specific Values
+        run: |
+          DOWNLOAD_URL="${REPO_URL}/releases/download/${TAG}/${SYS_ID}.zip"
+
+          jq --arg url "$REPO_URL" '.url=$url' system.json | sponge system.json
+          jq --arg manifest "$MANIFEST_URL" '.manifest=$manifest' system.json | sponge system.json
+          jq --arg download "$DOWNLOAD_URL" '.download=$download' system.json | sponge system.json
+          jq --arg version "$TAG" '.version=$version' system.json | sponge system.json
+
+      - name: Read System manifest for later use
+        run: |
+          cat system.json
+          echo "MANIFEST_JSON=$(jq -c . < system.json)" >> $GITHUB_ENV
+
+      - name: Build and package release artifacts
+        run: |
+          npm ci
+          gulp build
+          npm run build:db
+          zip -r "./${SYS_ID}.zip" system.json template.json LICENSE README.md README-DEV.md dist/ packs/ --exclude "packs/_source/*"
+
+      - name: Update Release with Files
+        uses: ncipollo/release-action@v1
+        with:
+          makeLatest: false
+          allowUpdates: true
+          name: ${{ github.event.release.name }}
+          draft: false
+          prerelease: ${{ github.event.release.prerelease }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "./system.json, ./${{ env.SYS_ID }}.zip"
+          tag: ${{ github.event.release.tag_name }}
+          body: ${{ github.event.release.body }}
+
+      # Optional: Deploy to Foundry's public package registry.
+      # This will ONLY run if you add FVTT_PACKAGE_RELEASE_TOKEN in repo secrets.
+      - name: Deploy Release to Foundry Package Registry
+        if: ${{ github.event.release.prerelease == false && secrets.FVTT_PACKAGE_RELEASE_TOKEN != '' }}
+        uses: fjogeleit/http-request-action@v1
+        env:
+          MINIMUM: ${{ fromJson(env.MANIFEST_JSON).compatibility.minimum }}
+          VERIFIED: ${{ fromJson(env.MANIFEST_JSON).compatibility.verified }}
+          MAXIMUM: ${{ fromJson(env.MANIFEST_JSON).compatibility.maximum }}
+        with:
+          url: "https://api.foundryvtt.com/_api/packages/release_version"
+          method: "POST"
+          contentType: "application/json"
+          customHeaders: '{"Authorization": "${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}"}'
+          data: >-
+            {"id":"${{ env.SYS_ID }}",
+             "release":{
+               "version":"${{ env.TAG }}",
+               "manifest":"${{ env.MANIFEST_URL }}",
+               "notes":"${{ env.REPO_URL }}/releases/tag/${{ env.TAG }}",
+               "compatibility":{"minimum":"${{ env.MINIMUM }}","verified":"${{ env.VERIFIED }}","maximum":"${{ env.MAXIMUM }}"}
+             }}
+
