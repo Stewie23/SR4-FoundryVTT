@@ -64,10 +64,12 @@ export const Skills = () => new FixedTypeObjectField(
             locksmith: skill({ attribute: 'agility', id: 'locksmith' }),
             infiltration: skill({ attribute: 'agility', group: 'Stealth', canDefault: false, id: 'infiltration' }),
 
+            //Body
+            diving: skill({ attribute: 'body', id: 'diving' }), 
+            parachuting skill({ attribute: 'body', id: 'parachuting' }), 
+
             // Physical Skills
-            disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),
-            diving: skill({ attribute: 'body', id: 'diving' }),      
-            free_fall: skill({ attribute: 'body', id: 'free_fall' }),          
+            disguise: skill({ attribute: 'intuition', group: 'Stealth', id: 'disguise' }),     
             perception: skill({ attribute: 'intuition', id: 'perception' }),
             running: skill({ attribute: 'strength', group: 'Athletics', id: 'running' }),        
             survival: skill({ attribute: 'willpower', group: 'Outdoors', id: 'survival' }),
