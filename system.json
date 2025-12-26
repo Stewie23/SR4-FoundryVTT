@@ -15,6 +15,10 @@
 
   "...": "keep the rest of your existing fields (documentTypes, esmodules, styles, languages, etc.)",
 
+  "esmodules": ["dist/bundle.js"],
+"styles": ["dist/bundle.css"],
+
+
   "documentTypes": {
   "Actor": {
     "character": { "htmlField": ["description.value"] },
