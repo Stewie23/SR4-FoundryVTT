@@ -251,6 +251,10 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
         data.pool = data.pool || DataDefaults.createData('value_field', { label: 'SR5.DicePool' });
         data.threshold = data.threshold || DataDefaults.createData('value_field', { label: 'SR5.Threshold' });
         data.limit = data.limit || DataDefaults.createData('value_field', { label: 'SR5.Limit' });
+        data.limit.base = 0;
+        data.limit.mod = [];
+        data.limit.override = undefined;
+
 
         data.values = data.values || {};
 
@@ -887,8 +891,7 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
      * NOTE: Limits will NEVER apply when the ApplyLimit setting is set accordingly.
      */
     get hasLimit(): boolean {
-        const applyLimit = game.settings.get(SYSTEM_NAME, FLAGS.ApplyLimits) as boolean;
-        return applyLimit && !this.hasPushTheLimit && this.limit.value > 0;
+        return false; // SR4: no limits
     }
 
     /**
@@ -897,7 +900,7 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
      * This will compare actual roll hits, without applied limit.
      */
     get hasReducedHits(): boolean {
-        return this.hits.value > this.limit.value;
+         return false; // SR4: no limit reduction
     }
 
     /**
@@ -964,7 +967,7 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
         // First, calculate hits based on roll and modifiers.
         this.hits.value = Helpers.calcTotal(this.hits, { min: 0 });
         // Second, reduce hits by limit.
-        this.hits.value = this.hasLimit ? Math.min(this.limit.value, this.hits.value) : this.hits.value;
+        // SR4 No Limits
 
         return this.hits;
     }
