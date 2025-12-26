@@ -20,10 +20,7 @@ import {ActionFlow} from "../item/flows/ActionFlow";
 import { ActionRollType, DamageType, MinimalActionType } from "../types/item/Action";
 import { DeepPartial } from "fvtt-types/utils";
 import { PackActionFlow } from "../item/flows/PackActionFlow";
-
-import { SuccessTest } from "./SuccessTest";
 import { SkillTest } from "./SkillTest";
-import { OpposedTest } from "./OpposedTest";
 
 const TESTS: Record<string, any> = {
   [SuccessTest.name]: SuccessTest,
