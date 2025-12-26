@@ -51,6 +51,7 @@ export const Skills = () => new FixedTypeObjectField(
             clubs: skill({ attribute: 'agility', group: 'Close Combat', id: 'clubs' }),
             exotic_melee: skill({ attribute: 'agility', canDefault: false, id: 'exotic_melee' }), // how to deal with exotic melee weapons?
             exotic_range: skill({ attribute: 'agility', canDefault: false, id: 'exotic_range' }), // how to deal with exotic ranged weapons?
+            gunnery: skill({ attribute: 'agility', id: 'gunnery' }),
             heavy_weapons: skill({ attribute: 'agility', group: 'Firearms', id: 'heavy_weapons' }),
             longarms: skill({ attribute: 'agility', group: 'Firearms', id: 'longarms' }),
             pistols: skill({ attribute: 'agility', group: 'Firearms', id: 'pistols' }),
@@ -118,7 +119,6 @@ export const Skills = () => new FixedTypeObjectField(
             demolitions: skill({ attribute: 'logic', id: 'demolitions' }),
             electronic_warfare: skill({ attribute: 'logic', group: 'Cracking', canDefault: false, id: 'electronic_warfare' }),
             first_aid: skill({ attribute: 'logic', group: 'Biotech', id: 'first_aid' }),
-            forgery: skill({ attribute: 'logic', id: 'forgery' }),
             hacking: skill({ attribute: 'logic', group: 'Cracking', id: 'hacking' }),
             hardware: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'hardware' }),
             locksmith: skill({ attribute: 'logic', canDefault: false, id: 'locksmith' }),
@@ -127,7 +127,6 @@ export const Skills = () => new FixedTypeObjectField(
             software: skill({ attribute: 'logic', group: 'Electronics', canDefault: false, id: 'software' }),
 
             // Vehicle Skills
-            gunnery: skill({ attribute: 'agility', id: 'gunnery' }),
             pilot_aerospace: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aerospace' }),
             pilot_aircraft: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_aircraft' }),
             pilot_walker: skill({ attribute: 'reaction', canDefault: false, id: 'pilot_walker' }),
