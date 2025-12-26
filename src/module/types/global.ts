@@ -93,7 +93,7 @@ declare module "fvtt-types/configuration" {
     }
 
     interface SystemNameConfig {
-        name: "shadowrun5e";
+        name: "sr4";
     }
 
     namespace CONFIG.Canvas {
@@ -110,7 +110,7 @@ declare module "fvtt-types/configuration" {
     }
 
     interface ReadyGame {
-        shadowrun5e: {
+        sr4: {
             inputDelay: number;
             [key: string]: any;
         };
@@ -163,29 +163,29 @@ declare module "fvtt-types/configuration" {
 
     interface FlagConfig {
         Actor: {
-            shadowrun5e: {
+            sr4: {
                 turnsSinceLastAttack?: number;
                 overwatchScore?: number;
             }
         };
         ChatMessage: {
-            shadowrun5e: {
+            sr4: {
                 TestData?: any;
                 MatrixNetworkMarkInvite: {actorUuid: string, targetUuid: string};
             }
         };
         Combat: {
-            shadowrun5e: {
+            sr4: {
                 combatInitiativePass?: number;
             };
         };
         Combatant: {
-            shadowrun5e: {
+            sr4: {
                 turnsSinceLastAttack?: number;
             };
         };
         Item: {
-            shadowrun5e: {
+            sr4: {
                 lastFireMode?: FireModeType;
                 lastSpellForce?: SpellForceType;
                 lastComplexFormLevel?: ComplexFormLevelType;
@@ -194,24 +194,24 @@ declare module "fvtt-types/configuration" {
             };
         };
         Macro: {
-            shadowrun5e: {
+            sr4: {
                 itemMacro?: boolean;
             }
         };
         Token: {
-            shadowrun5e: {
+            sr4: {
                 TokenUseRoutingLib?: boolean;
             };
         }
         User: {
-            shadowrun5e: {
+            sr4: {
                 showApplication?: boolean;
                 changelogShownForVersion?: string;
                 lastRollPromptValue?: number;
             }
         };
         Scene: {
-            shadowrun5e: {
+            sr4: {
                 modifier?: Shadowrun.SituationModifiersSourceData;
             }
         };
@@ -248,37 +248,37 @@ declare module "fvtt-types/configuration" {
     }
 
     interface SettingConfig {
-        "shadowrun5e.applyLimits": boolean;
-        "shadowrun5e.diagonalMovement": string;
-        "shadowrun5e.GlobalDataStorage": Record<string, unknown>;
-        "shadowrun5e.showGlitchAnimation": boolean;
-        "shadowrun5e.systemMigrationVersion": string;
-        "shadowrun5e.showTokenNameInsteadOfActor": boolean;
-        "shadowrun5e.onlyAllowRollOnDefaultableSkills": boolean;
-        "shadowrun5e.showSkillsWithDetails": boolean;
-        "shadowrun5e.onlyAutoRollNPCInCombat": boolean;
-        "shadowrun5e.tokenHealthBars": boolean;
-        "shadowrun5e.HideGMOnlyChatContent": boolean;
-        "shadowrun5e.MustConsumeRessourcesOnTest": boolean;
-        "shadowrun5e.UseDamageCondition": boolean;
-        "shadowrun5e.AutomateMultiDefenseModifier": boolean;
-        "shadowrun5e.AutomateProgressiveRecoil": boolean;
-        "shadowrun5e.ManualRollOnSuccessTest": boolean;
-        "shadowrun5e.DefaultOpposedTestActorSelection": boolean;
-        "shadowrun5e.MarkImports": string;
-        "shadowrun5e.ImportIconFolder": string;
-        "shadowrun5e.UseImportIconOverrides": boolean;
-        "shadowrun5e.TokenRulerColorWalking": foundry.data.fields.ColorField<{ initial: '00FF00' }>;
-        "shadowrun5e.TokenRulerColorRunning": foundry.data.fields.ColorField<{ initial: '0000FF' }>;
-        "shadowrun5e.TokenRulerColorSprinting": foundry.data.fields.ColorField<{ initial: 'FF0000' }>;
-        "shadowrun5e.TokenRulerOpacity": foundry.data.fields.NumberField<{ nullable: false, initial: 0.5, min: 0, max: 1, step: 0.01 }>;
-        "shadowrun5e.CompendiaSettingsMenu": typeof SR5CompendiaSettings;
-        "shadowrun5e.GeneralActionsPack": string;
-        "shadowrun5e.MatrixActionsPack": string;
-        "shadowrun5e.ICActionsPack": string;
-        "shadowrun5e.CompendiumBrowserBlacklist": string[];
-        "shadowrun5e.ImporterCompendiumOrder": string[];
-        "shadowrun5e.DieFaceLabels": string;
+        "sr4.applyLimits": boolean;
+        "sr4.diagonalMovement": string;
+        "sr4.GlobalDataStorage": Record<string, unknown>;
+        "sr4.showGlitchAnimation": boolean;
+        "sr4.systemMigrationVersion": string;
+        "sr4.showTokenNameInsteadOfActor": boolean;
+        "sr4.onlyAllowRollOnDefaultableSkills": boolean;
+        "sr4.showSkillsWithDetails": boolean;
+        "sr4.onlyAutoRollNPCInCombat": boolean;
+        "sr4.tokenHealthBars": boolean;
+        "sr4.HideGMOnlyChatContent": boolean;
+        "sr4.MustConsumeRessourcesOnTest": boolean;
+        "sr4.UseDamageCondition": boolean;
+        "sr4.AutomateMultiDefenseModifier": boolean;
+        "sr4.AutomateProgressiveRecoil": boolean;
+        "sr4.ManualRollOnSuccessTest": boolean;
+        "sr4.DefaultOpposedTestActorSelection": boolean;
+        "sr4.MarkImports": string;
+        "sr4.ImportIconFolder": string;
+        "sr4.UseImportIconOverrides": boolean;
+        "sr4.TokenRulerColorWalking": foundry.data.fields.ColorField<{ initial: '00FF00' }>;
+        "sr4.TokenRulerColorRunning": foundry.data.fields.ColorField<{ initial: '0000FF' }>;
+        "sr4.TokenRulerColorSprinting": foundry.data.fields.ColorField<{ initial: 'FF0000' }>;
+        "sr4.TokenRulerOpacity": foundry.data.fields.NumberField<{ nullable: false, initial: 0.5, min: 0, max: 1, step: 0.01 }>;
+        "sr4.CompendiaSettingsMenu": typeof SR5CompendiaSettings;
+        "sr4.GeneralActionsPack": string;
+        "sr4.MatrixActionsPack": string;
+        "sr4.ICActionsPack": string;
+        "sr4.CompendiumBrowserBlacklist": string[];
+        "sr4.ImporterCompendiumOrder": string[];
+        "sr4.DieFaceLabels": string;
     }
 }
 
