@@ -4,114 +4,82 @@ import { SuccessTest, SuccessTestData, TestOptions } from './SuccessTest';
 import { Translation } from '../utils/strings';
 
 export interface SkillTestData extends SuccessTestData {
-    attribute: Shadowrun.ActorAttribute
-    limitSelection: string
+  attribute: Shadowrun.ActorAttribute;
 }
 
-
 /**
- * Skill tests allow users to change the connected attribute and limit.
- * 
- * Rule wise a skill test doesn't alter a default success test.
+ * SR4: Skill tests allow users to change the connected attribute.
+ * (No limits in SR4.)
  */
 export class SkillTest extends SuccessTest<SkillTestData> {
-    // temporary selection information.
-    lastUsedAttribute: string;
-    lastUsedLimit: string;
+  // temporary selection information
+  lastUsedAttribute: string;
 
-    constructor(data, documents, options) {
-        super(data, documents, options);
+  constructor(data, documents, options) {
+    super(data, documents, options);
+    this.lastUsedAttribute = this.data.attribute;
+  }
 
-        this.lastUsedAttribute = this.data.attribute;
-        this.lastUsedLimit = this.data.limitSelection;
-    }
+  /**
+   * Allow users to alter detailed skill values.
+   * TODO: swap to an SR4 template (no limit dropdown).
+   */
+  override get _dialogTemplate() {
+    // Change this to an SR4 template once you have it.
+    return 'systems/shadowrun5e/dist/templates/apps/dialogs/skill-test-dialog.hbs';
+  }
 
-    /**
-     * Allow users to alter detailed skill values.
-     */
-    override get _dialogTemplate() {
-        return 'systems/shadowrun5e/dist/templates/apps/dialogs/skill-test-dialog.hbs';
-    }
+  /**
+   * Show skill label as title instead of the generic success test label.
+   */
+  override get title() {
+    if (!this.actor) return super.title;
+    // TODO: rename SR5.Test key or replace with SR4.Test in your lang files
+    return `${game.i18n.localize(this.actor.getSkillLabel(this.data.action.skill) as Translation)} ${game.i18n.localize('SR5.Test')}`;
+  }
 
-    /**
-     * Show skill label as title instead of the generic success test label.
-     */
-    override get title() {
-        if (!this.actor) return super.title;
-        return `${game.i18n.localize(this.actor.getSkillLabel(this.data.action.skill) as Translation)} ${game.i18n.localize('SR5.Test')}`;
-    }
+  /**
+   * A SkillTest needs to store attribute selection (SR4: no limits).
+   */
+  override _prepareData(data: any, options: TestOptions) {
+    data = super._prepareData(data, options);
+    data.action = data.action || DataDefaults.createData('action_roll');
 
-    /**
-     * A SkillTest has the need to store attribute and limit selections
-     */
-    override _prepareData(data: any, options: TestOptions) {
-        data = super._prepareData(data, options);
+    // Preselect based on action.
+    data.attribute = data.action.attribute;
 
-        data.action = data.action || DataDefaults.createData('action_roll');
+    return data;
+  }
 
-        // Preselect based on action.
-        data.attribute = data.action.attribute;
-        data.limitSelection = data.action.limit.attribute;
+  /**
+   * Skill test provides a selection for attribute during TestDialog.
+   */
+  override prepareBaseValues() {
+    this.prepareAttributeSelection();
+    super.prepareBaseValues();
+  }
 
-        return data;
-    }
+  /**
+   * Change out previous attribute with new selection.
+   */
+  prepareAttributeSelection() {
+    if (!this.actor) return;
 
-    /**
-     * Skill test provides a selection for attribute and limit during TestDialog.
-     */
-    override prepareBaseValues() {
-        this.prepareAttributeSelection();
-        this.prepareLimitSelection();
+    const useSelection = this.data.attribute !== this.data.action.attribute;
+    const selectedAttribute = useSelection ? this.data.attribute : this.data.action.attribute;
 
-        super.prepareBaseValues();
-    }
+    const usedAttribute = this.actor.getAttribute(selectedAttribute);
+    const lastUsedAttribute = this.actor.getAttribute(this.lastUsedAttribute);
 
-    /**
-     * Change out previous attribute with new selection.
-     */
-    prepareAttributeSelection() {
-        if (!this.actor) return;
+    if (!usedAttribute || !lastUsedAttribute) return;
 
-        // Remove last used attribute and its modifiers and replace with new selection.
-        const useSelection = this.data.attribute !== this.data.action.attribute;
-        const selectedAttribute = useSelection ? this.data.attribute : this.data.action.attribute;
-        const usedAttribute = this.actor.getAttribute(selectedAttribute);
-        const lastUsedAttribute = this.actor.getAttribute(this.lastUsedAttribute);
+    const pool = new PartsList<number>(this.pool.mod);
 
-        if (!usedAttribute || !lastUsedAttribute) return; 
+    // Replace previous attribute with new one, without changing other modifiers.
+    pool.removePart(lastUsedAttribute.label);
+    pool.addPart(usedAttribute.label, usedAttribute.value);
 
-        const pool = new PartsList<number>(this.pool.mod);
-
-        // Replace previous attribute with new one, without changing other modifiers
-        pool.removePart(lastUsedAttribute.label);
-        pool.addPart(usedAttribute.label, usedAttribute.value);
-
-        this.lastUsedAttribute = selectedAttribute;
-        this.data.action.attribute = selectedAttribute;
-    }
-
-    /**
-     * Change out previous limit with new selection.
-     */
-    prepareLimitSelection() {
-        if (!this.actor) return;
-
-        // Remove last used limit and its modifiers and replace with new selection.
-        const useSelection = this.data.limitSelection !== this.data.action.limit.attribute;
-        const selectedLimit = useSelection ? this.data.limitSelection : this.data.action.limit.attribute;
-        const usedLimit = this.actor.getLimit(selectedLimit);
-        const lastUsedLimit = this.actor.getLimit(this.lastUsedLimit);
-
-        if (!usedLimit || !lastUsedLimit) return;
-
-        const limit = new PartsList<number>(this.limit.mod);
-
-        // Replace previous limit with new one, without changing other modifiers.
-        limit.removePart(lastUsedLimit.label);
-        limit.addPart(usedLimit.label, usedLimit.value);
-
-        this.lastUsedLimit = selectedLimit;
-
-        this.data.action.limit.attribute = selectedLimit as Shadowrun.ActorAttribute;
-    }
+    this.lastUsedAttribute = selectedAttribute;
+    this.data.action.attribute = selectedAttribute;
+  }
 }
