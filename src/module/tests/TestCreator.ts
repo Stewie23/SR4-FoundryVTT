@@ -21,6 +21,17 @@ import { ActionRollType, DamageType, MinimalActionType } from "../types/item/Act
 import { DeepPartial } from "fvtt-types/utils";
 import { PackActionFlow } from "../item/flows/PackActionFlow";
 
+import { SuccessTest } from "./SuccessTest";
+import { SkillTest } from "./SkillTest";
+import { OpposedTest } from "./OpposedTest";
+
+const TESTS: Record<string, any> = {
+  [SuccessTest.name]: SuccessTest,
+  [SkillTest.name]: SkillTest,
+  [OpposedTest.name]: OpposedTest,
+};
+
+
 /**
  * Any test implementation can either be created by calling it's constructor directly or by using the TestCreator.
  * 
@@ -335,12 +346,15 @@ export const TestCreator = {
      */
     _getTestClass: function(testName: string): any | undefined {
         if (!testName) return;
-        if (!Object.hasOwn(game.sr4.tests, testName)) {
-            console.error(`Shadowrun 5e | Tried getting a Test Class ${testName}, which isn't registered in: `, game.sr4.tests);
+
+        const cls = TESTS[testName];
+        if (!cls) {
+            console.error(`SR4 | Tried getting a Test Class '${testName}', but it's not registered. Known:`, Object.keys(TESTS));
             return;
         }
-        return game.sr4.tests[testName];
+        return cls;
     },
+
 
     /**
      * Return test data based on an items action.
