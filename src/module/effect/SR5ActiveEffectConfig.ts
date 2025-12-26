@@ -278,7 +278,7 @@ export class SR5ActiveEffectConfig extends foundry.applications.sheets.ActiveEff
     _getTestOptions() {
         // Tagify expects this format for localized tags.
         // FIXME TS 'test' comes out as 'unknown' so we need to cast it to any here
-        return Object.values(game.shadowrun5e.tests).map(((test: any) => ({
+        return Object.values(game.sr4.tests).map(((test: any) => ({
             label: test.label, id: test.name
         })));
     }

@@ -45,7 +45,7 @@ export namespace CompendiumBrowserTypes {
         queryName?: string;
         /** An optional array of document subtypes (e.g., ["weapon", "spell"]). */
         types?: (typeof foundry.documents)[DocType]["TYPES"][];
-        /** An optional array of pack collections (e.g., ["shadowrun5e.core-items"]) to explicitly include. */
+        /** An optional array of pack collections (e.g., ["sr4.core-items"]) to explicitly include. */
         packs?: string[];
     }
 

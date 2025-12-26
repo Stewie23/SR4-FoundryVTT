@@ -83,6 +83,6 @@ export class Version0_30_0 extends VersionMigration {
         if (flag.selection_tests)
             effect.system.selection_tests = JSON.parse(flag.selection_tests);
 
-        delete effect.flags.shadowrun5e;
+        delete effect.flags.sr4;
     }
 }

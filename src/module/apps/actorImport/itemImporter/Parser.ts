@@ -50,7 +50,7 @@ export abstract class Parser<T extends ItemSystems> {
             type: this.parseType,
             img: null as string | null,
             _id: foundry.utils.randomID(),
-            flags: { shadowrun5e: {} as FlagType },
+            flags: { sr4: {} as FlagType },
             system: DataDefaults.baseSystemData(this.parseType),
         } satisfies Item.CreateData;
     }
@@ -144,7 +144,7 @@ export abstract class Parser<T extends ItemSystems> {
                 this.parseItem(item, itemData);
                 this.parseImportFlags(item, itemData);
 
-                item.flags.shadowrun5e.embeddedItems = await this.getEmbeddedItems(itemData);
+                item.flags.sr4.embeddedItems = await this.getEmbeddedItems(itemData);
 
                 if (Parser.iconSet && !item.img)
                     item.img = IconAssign.iconAssign(Parser.iconSet, item);

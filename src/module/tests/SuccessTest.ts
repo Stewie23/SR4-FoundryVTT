@@ -163,10 +163,10 @@ export interface SuccessTestMessageData {
  * be an action configuration that is used to retrieve and create the test.
  * 
  * The test registry is a simple key value store mapping names to classes underneath
- * game.shadowrun5e.tests
+ * game.sr4.tests
  * 
  * For the default SuccessTest class the registry entry would look like this:
- * > game.shadowrun5e.tests['SuccessTest'] = SuccessTest;
+ * > game.sr4.tests['SuccessTest'] = SuccessTest;
  * and it would be retrieved by the TestCreator like this:
  * > const SuccessTest = TestCreate._getTestClass('SuccessTest');
  */

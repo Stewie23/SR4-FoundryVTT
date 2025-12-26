@@ -149,7 +149,7 @@ export const characterImporterTesting = (context: QuenchBatchContext) => {
             assert.strictEqual(weapon.system.range.modes.single_shot, true);
 
             //embedded items
-            assert.strictEqual(IH.getArray(weapon.flags.shadowrun5e?.embeddedItems).length, 1);
+            assert.strictEqual(IH.getArray(weapon.flags.sr4?.embeddedItems).length, 1);
         });
 
         it('Should have the correct vehicles', async () => {

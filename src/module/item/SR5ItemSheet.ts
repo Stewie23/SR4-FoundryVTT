@@ -53,10 +53,10 @@ export interface SR5BaseItemSheetData extends ItemSheet.RenderContext, SR5Applic
     isUsingRangeCategory: boolean;
 
     // Tests
-    tests: typeof game.shadowrun5e.tests;
-    opposedTests: typeof game.shadowrun5e.opposedTests;
-    activeTests: typeof game.shadowrun5e.activeTests;
-    resistTests: typeof game.shadowrun5e.resistTests;
+    tests: typeof game.sr4.tests;
+    opposedTests: typeof game.sr4.opposedTests;
+    activeTests: typeof game.sr4.activeTests;
+    resistTests: typeof game.sr4.resistTests;
 
     // Description
     descriptionHTML?: string;
@@ -95,10 +95,10 @@ interface SR5ItemSheetData extends SR5BaseItemSheetData {
     linkedActor: SR5Actor | undefined
 
     // Action Items. (not only type = action)
-    tests: typeof game.shadowrun5e.tests
-    opposedTests: typeof game.shadowrun5e.opposedTests
-    activeTests: typeof game.shadowrun5e.activeTests
-    resistTests: typeof game.shadowrun5e.resistTests
+    tests: typeof game.sr4.tests
+    opposedTests: typeof game.sr4.opposedTests
+    activeTests: typeof game.sr4.activeTests
+    resistTests: typeof game.sr4.resistTests
 
     // Rendered description field
     descriptionHTML: string
@@ -433,10 +433,10 @@ export class SR5ItemSheet<T extends SR5BaseItemSheetData = SR5ItemSheetData> ext
         }
 
         // Provide action parts with all test variants.
-        data.tests = game.shadowrun5e.tests;
-        data.opposedTests = game.shadowrun5e.opposedTests;
-        data.activeTests = game.shadowrun5e.activeTests;
-        data.resistTests = game.shadowrun5e.resistTests;
+        data.tests = game.sr4.tests;
+        data.opposedTests = game.sr4.opposedTests;
+        data.activeTests = game.sr4.activeTests;
+        data.resistTests = game.sr4.resistTests;
 
         if (this.item.system.description)
             data.descriptionHTML = await this.enrichEditorFieldToHTML(this.item.system.description.value);

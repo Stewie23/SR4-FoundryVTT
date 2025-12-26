@@ -148,10 +148,10 @@ For further details see the `SuccessTest` class docs and `TestCreation` docs.
   * A resist test for the opposed test
 * Each of these defines at least what test to use and allows for skill/attributes to be configured, should the user want to
 * If there is no user configured test action default action values will be used that are connected to the test implementation
-* All test implementations are registered within `game.shadowrun5e.tests` and only taken and created from there
+* All test implementations are registered within `game.sr4.tests` and only taken and created from there
 * Modules can, in theory, overwrite a registered test implementation by replacing the implementation for a test within that registry
 ### Test creation
-If you don't know how to create a `SuccessTest` implementation the helper function within `TestCreator` available at `game.shadowrun5e.test`
+If you don't know how to create a `SuccessTest` implementation the helper function within `TestCreator` available at `game.sr4.test`
 provide a few different options. These are meant as system internal helpers to simplify the different ways to create tests
 into one helper and not pollute the general `SuccessTest` class.
 #### Value application

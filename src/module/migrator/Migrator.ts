@@ -100,7 +100,7 @@ export class Migrator {
                 const nestedMigrated = this.migrate("Item", nestedItems, true, path);
                 migrated = migrated || nestedMigrated;
             }
-            foundry.utils.setProperty(data, 'flags.shadowrun5e.embeddedItems', items);
+            foundry.utils.setProperty(data, 'flags.sr4.embeddedItems', items);
 
             if (nested) {
                 const effects = this.normalizeArray(data.effects);

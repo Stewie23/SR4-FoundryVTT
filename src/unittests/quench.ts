@@ -43,78 +43,78 @@ export const quenchRegister = (quench: Quench) => {
         'Shadowrun 5e | Be aware that FoundryVTT will tank in update performance when a lot of documents are in collections. This is the case if you have all Chummer items imported and might cause tests to cross the 2000ms quench timeout threshold. Clear those collections in a test world. :)',
     );
 
-    quench.registerBatch('shadowrun5e.rules.matrix', shadowrunMatrix, {
+    quench.registerBatch('sr4.rules.matrix', shadowrunMatrix, {
         displayName: 'SHADOWRUN5e: Matrix Rules Test',
     });
-    quench.registerBatch('shadowrun5e.rules.modifiers', shadowrunRulesModifiers, {
+    quench.registerBatch('sr4.rules.modifiers', shadowrunRulesModifiers, {
         displayName: 'SHADOWRUN5e: Modifiers Rules Test',
     });
-    quench.registerBatch('shadowrun5e.rules.ranged_weapon', shadowrunSR5RangedWeaponRules, {
+    quench.registerBatch('sr4.rules.ranged_weapon', shadowrunSR5RangedWeaponRules, {
         displayName: 'SHADOWRUN5e: Ranged Weapon Rules Test',
     });
-    quench.registerBatch('shadowrun5e.characterImporter', characterImporterTesting, {
+    quench.registerBatch('sr4.characterImporter', characterImporterTesting, {
         displayName: 'SHADOWRUN5e: Chummer Character Importer',
     });
-    quench.registerBatch('shadowrun5e.spiritImporter', spiritImporterTesting, {
+    quench.registerBatch('sr4.spiritImporter', spiritImporterTesting, {
         displayName: 'SHADOWRUN5e: Chummer Spirit Importer',
     });
-    quench.registerBatch('shadowrun5e.spriteImporter', spriteImporterTesting, {
+    quench.registerBatch('sr4.spriteImporter', spriteImporterTesting, {
         displayName: 'SHADOWRUN5e: Chummer Sprite Importer',
     });
-    quench.registerBatch('shadowrun5e.entities.items', shadowrunSR5Item, { displayName: 'SHADOWRUN5e: SR5Item Test' });
-    quench.registerBatch('shadowrun5e.entities.effects', shadowrunSR5ActiveEffect, {
+    quench.registerBatch('sr4.entities.items', shadowrunSR5Item, { displayName: 'SHADOWRUN5e: SR5Item Test' });
+    quench.registerBatch('sr4.entities.effects', shadowrunSR5ActiveEffect, {
         displayName: 'SHADOWRUN5e: SR5ActiveEffect Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.character', shadowrunSR5CharacterDataPrep, {
+    quench.registerBatch('sr4.data_prep.character', shadowrunSR5CharacterDataPrep, {
         displayName: 'SHADOWRUN5e: SR5CharacterDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.critter', shadowrunSR5CritterDataPrep, {
+    quench.registerBatch('sr4.data_prep.critter', shadowrunSR5CritterDataPrep, {
         displayName: 'SHADOWRUN5e: SR5CritterDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.sprite', shadowrunSR5SpriteDataPrep, {
+    quench.registerBatch('sr4.data_prep.sprite', shadowrunSR5SpriteDataPrep, {
         displayName: 'SHADOWRUN5e: SR5CSpriteDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.spirit', shadowrunSR5SpiritDataPrep, {
+    quench.registerBatch('sr4.data_prep.spirit', shadowrunSR5SpiritDataPrep, {
         displayName: 'SHADOWRUN5e: SR5SpiritDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.ic', shadowrunSR5ICDataPrep, {
+    quench.registerBatch('sr4.data_prep.ic', shadowrunSR5ICDataPrep, {
         displayName: 'SHADOWRUN5e: SR5ICDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.vehicle', shadowrunSR5VehicleDataPrep, {
+    quench.registerBatch('sr4.data_prep.vehicle', shadowrunSR5VehicleDataPrep, {
         displayName: 'SHADOWRUN5e: SR5VehicleDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.data_prep.item', shadowrunSR5ItemDataPrep, {
+    quench.registerBatch('sr4.data_prep.item', shadowrunSR5ItemDataPrep, {
         displayName: 'SHADOWRUN5e: SR5ItemDataPreparation Test',
     });
-    quench.registerBatch('shadowrun5e.flow.marks', shadowrunMarks, {
+    quench.registerBatch('sr4.flow.marks', shadowrunMarks, {
         displayName: 'SHADOWRUN5e: Matrix Marks Test',
     });
-    quench.registerBatch('shadowrun5e.flow.inventory', shadowrunInventoryFlow, {
+    quench.registerBatch('sr4.flow.inventory', shadowrunInventoryFlow, {
         displayName: 'SHADOWRUN5e: InventoryFlow Test',
     });
-    quench.registerBatch('shadowrun5e.flow.driver', shadowrunDriver, {
+    quench.registerBatch('sr4.flow.driver', shadowrunDriver, {
         displayName: 'SHADOWRUN5e: Driver Flow Test',
     })
-    quench.registerBatch('shadowrun5e.flow.rigger', shadowrunRiggerTesting, {
+    quench.registerBatch('sr4.flow.rigger', shadowrunRiggerTesting, {
         displayName: 'SHADOWRUN5e: Rigger Flow Testing',
     })
-    quench.registerBatch('shadowrun5e.flow.tests', shadowrunTesting, { displayName: 'SHADOWRUN5e: SuccessTest Test' });
-    quench.registerBatch('shadowrun5e.flow.tests_attack', shadowrunAttackTesting, {
+    quench.registerBatch('sr4.flow.tests', shadowrunTesting, { displayName: 'SHADOWRUN5e: SuccessTest Test' });
+    quench.registerBatch('sr4.flow.tests_attack', shadowrunAttackTesting, {
         displayName: 'SHADOWRUN5e: Attack Test',
     });
-    quench.registerBatch('shadowrun5e.flow.test_value_resolution', shadowrunTestValueResolution, { displayName: 'SHADOWRUN5e: Test Value Resolution' });
-    quench.registerBatch('shadowrun5e.flow.tests_matrix', shadowrunMatrixTesting, { displayName: 'SHADOWRUN5e: Matrix Test' });
-    quench.registerBatch('shadowrun5e.flow.tests_resist_matrix', shadowrunMatrixDamageResist, {
+    quench.registerBatch('sr4.flow.test_value_resolution', shadowrunTestValueResolution, { displayName: 'SHADOWRUN5e: Test Value Resolution' });
+    quench.registerBatch('sr4.flow.tests_matrix', shadowrunMatrixTesting, { displayName: 'SHADOWRUN5e: Matrix Test' });
+    quench.registerBatch('sr4.flow.tests_resist_matrix', shadowrunMatrixDamageResist, {
         displayName: 'SHADOWRUN5e: Resist Matrix Test'
     });
-    quench.registerBatch('shadowrun5e.flow.sr5roll', shadowrunRolling, { displayName: 'SHADOWRUN5e: SR5Roll' });
-    quench.registerBatch('shadowrun5e.parser.weapon', weaponParserBaseTesting, {
+    quench.registerBatch('sr4.flow.sr5roll', shadowrunRolling, { displayName: 'SHADOWRUN5e: SR5Roll' });
+    quench.registerBatch('sr4.parser.weapon', weaponParserBaseTesting, {
         displayName: 'SHADOWRUN5e: Data Importer Weapon Parsing',
     });
-    quench.registerBatch('shadowrun5e.flow.damage', shadowrunDamage, {
+    quench.registerBatch('sr4.flow.damage', shadowrunDamage, {
         displayName: 'SHADOWRUN5e: Damage Application',
     });
-    quench.registerBatch('shadowrun5e.actor.npc', shadowrunNPC, {
+    quench.registerBatch('sr4.actor.npc', shadowrunNPC, {
         displayName: 'SHADOWRUN5e: NPC Character Test',
     });
 };
