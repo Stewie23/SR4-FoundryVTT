@@ -37,6 +37,14 @@ jobs:
           echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
           echo "MANIFEST_URL=https://github.com/${{ github.repository }}/releases/latest/download/system.json" >> $GITHUB_ENV
 
+      - name: Expose Foundry deploy token (if present)
+        run: |
+          if [ -n "${{ secrets.FVTT_PACKAGE_RELEASE_TOKEN }}" ]; then
+            echo "HAS_FVTT_TOKEN=true" >> $GITHUB_ENV
+          else
+            echo "HAS_FVTT_TOKEN=false" >> $GITHUB_ENV
+          fi
+
       - name: Modify System Manifest With Release-Specific Values
         run: |
           DOWNLOAD_URL="${REPO_URL}/releases/download/${TAG}/${SYS_ID}.zip"
@@ -74,7 +82,7 @@ jobs:
       # Optional: Deploy to Foundry's public package registry.
       # This will ONLY run if you add FVTT_PACKAGE_RELEASE_TOKEN in repo secrets.
       - name: Deploy Release to Foundry Package Registry
-        if: ${{ github.event.release.prerelease == false && secrets.FVTT_PACKAGE_RELEASE_TOKEN != '' }}
+        if: github.event.release.prerelease == false && env.HAS_FVTT_TOKEN == 'true'
         uses: fjogeleit/http-request-action@v1
         env:
           MINIMUM: ${{ fromJson(env.MANIFEST_JSON).compatibility.minimum }}
@@ -93,4 +101,3 @@ jobs:
                "notes":"${{ env.REPO_URL }}/releases/tag/${{ env.TAG }}",
                "compatibility":{"minimum":"${{ env.MINIMUM }}","verified":"${{ env.VERIFIED }}","maximum":"${{ env.MAXIMUM }}"}
              }}
-
