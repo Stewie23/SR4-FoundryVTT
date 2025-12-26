@@ -74,7 +74,7 @@ export abstract class Parser<SubType extends SystemEntityType> {
         if (this.isActor())
             (entity as Actor.CreateData).items = await itemPromise;
         else
-            (entity as Item.CreateData).flags = { shadowrun5e: { embeddedItems: await itemPromise } };
+            (entity as Item.CreateData).flags = { sr4: { embeddedItems: await itemPromise } };
 
         await bonusPromise;
 
