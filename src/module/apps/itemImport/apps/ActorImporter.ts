@@ -45,7 +45,7 @@ export class ActorImporter extends BaseClass {
      */
     static override PARTS = {
         content: {
-            template: "systems/shadowrun5e/dist/templates/apps/actor-importer.hbs",
+            template: "systems/sr4/dist/templates/apps/actor-importer.hbs",
         },
     };
 

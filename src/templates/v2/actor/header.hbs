@@ -19,7 +19,7 @@
                         </label>
                     {{/if}}
                 {{/if}}
-                {{> 'systems/shadowrun5e/dist/templates/v2/common/document-source-icon.hbs' system.description.source }}
+                {{> 'systems/sr4/dist/templates/v2/common/document-source-icon.hbs' system.description.source }}
             {{/unless}}
             {{formInput fields.name value=actor.name classes="sheet-name"
                         placeholder=(localize "SR5.Name") disabled=@root.isPlayMode rootId=rootId}}
@@ -33,21 +33,21 @@
             <div>
 
                 {{#if (or isIC isSprite)}}
-                    {{> 'systems/shadowrun5e/dist/templates/v2/actor/parts/condition-monitor.hbs'
+                    {{> 'systems/sr4/dist/templates/v2/actor/parts/condition-monitor.hbs'
                         id='matrix'
                         track=system.track.matrix
                         tooltip=(localize "SR5.Labels.ActorSheet.Matrix")
                     }}
                 {{/if}}
                 {{#if (or isCharacter isSpirit)}}
-                    {{> 'systems/shadowrun5e/dist/templates/v2/actor/parts/condition-monitor.hbs'
+                    {{> 'systems/sr4/dist/templates/v2/actor/parts/condition-monitor.hbs'
                         id='stun'
                         track=system.track.stun
                         tooltip=(localize "SR5.Labels.ActorSheet.StunTrack")
                     }}
                 {{/if}}
                 {{#unless (or isIC isSprite)}}
-                    {{> 'systems/shadowrun5e/dist/templates/v2/actor/parts/condition-monitor.hbs'
+                    {{> 'systems/sr4/dist/templates/v2/actor/parts/condition-monitor.hbs'
                         id='physical'
                         track=system.track.physical
                         tooltip=(localize "SR5.Labels.ActorSheet.PhysicalTrack")
@@ -59,7 +59,7 @@
     </div>
     {{#unless isLimited}}
         <div class="sheet-header-col">
-            {{> 'systems/shadowrun5e/dist/templates/v2/actor/parts/initiative.hbs' }}
+            {{> 'systems/sr4/dist/templates/v2/actor/parts/initiative.hbs' }}
             {{#if @root.isEditMode}}
                 <div>
                     <div class="list-item">
@@ -76,7 +76,7 @@
                 </div>
             {{else}}
                 {{#if system.attributes.edge.value}}
-                    {{> 'systems/shadowrun5e/dist/templates/v2/common/horizontal-cells.hbs'
+                    {{> 'systems/sr4/dist/templates/v2/common/horizontal-cells.hbs'
                         tooltip="SR5.AttrEdge"
                         value=system.attributes.edge.uses
                         max=system.attributes.edge.value

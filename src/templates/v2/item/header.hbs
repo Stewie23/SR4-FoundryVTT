@@ -9,7 +9,7 @@
         <div class="sheet-header-labels">
             <div class="sheet-header-name">
                 {{#unless isLimited}}
-                    {{> 'systems/shadowrun5e/dist/templates/v2/common/document-source-icon.hbs' system.description.source }}
+                    {{> 'systems/sr4/dist/templates/v2/common/document-source-icon.hbs' system.description.source }}
                     {{#if (and system.importFlags.isFreshImport (itemMarking "ANY"))}}
                         {{#if @root.isEditMode}}
                             <button type="button" class="toggle-fresh-import" data-action="toggleFreshImport" data-tooltip="SR5.MarkImportedItemTooltip">
@@ -41,7 +41,7 @@
                     <div>
                         <div class="list-item">
                             <div class="list-item-start">
-                                {{> 'systems/shadowrun5e/dist/templates/v2/common/horizontal-cells.hbs'
+                                {{> 'systems/sr4/dist/templates/v2/common/horizontal-cells.hbs'
                                     tooltip=(localize "SR5.Labels.ActorSheet.Matrix")
                                     value=system.technology.condition_monitor.value
                                     max=system.technology.condition_monitor.max

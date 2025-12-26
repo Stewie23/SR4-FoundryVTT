@@ -493,14 +493,14 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
      * Allow other implementations to override what TestDialog template to use.
      */
     get _dialogTemplate(): string {
-        return 'systems/shadowrun5e/dist/templates/apps/dialogs/success-test-dialog.hbs';
+        return 'systems/sr4/dist/templates/apps/dialogs/success-test-dialog.hbs';
     }
 
     /**
      * Allow other implementations to override what ChatMessage template to use.
      */
     get _chatMessageTemplate(): string {
-        return 'systems/shadowrun5e/dist/templates/rolls/success-test-message.hbs';
+        return 'systems/sr4/dist/templates/rolls/success-test-message.hbs';
     }
 
     /**

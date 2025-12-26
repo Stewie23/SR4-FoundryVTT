@@ -26,7 +26,7 @@ export class SkillTest extends SuccessTest<SkillTestData> {
    */
   override get _dialogTemplate() {
     // Change this to an SR4 template once you have it.
-    return 'systems/shadowrun5e/dist/templates/apps/dialogs/skill-test-dialog.hbs';
+    return 'systems/sr4/dist/templates/apps/dialogs/skill-test-dialog.hbs';
   }
 
   /**
