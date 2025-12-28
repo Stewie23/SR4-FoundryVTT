@@ -286,6 +286,18 @@ export class SR5Actor<SubType extends Actor.ConfiguredSubType = Actor.Configured
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Prepare skill items for easy use and access.
+     */
+    prepareSkills() {
+        const skills = this.itemsForType.get('skill') as SR5Item<'skill'>[];
+        if (!skills) return;
+        this.skills = SkillFlow.prepareActorSkills(skills);
+    }
+
+    /**
+>>>>>>> c5d10ff8a (Refactored functinality into SkillFlow)
      * NOTE: This method is unused at the moment, keep it for future inspiration.
      */
     applyOverrideActiveEffects() {
@@ -654,12 +666,23 @@ export class SR5Actor<SubType extends Actor.ConfiguredSubType = Actor.Configured
         return this.getSkills() !== undefined;
     }
 
+<<<<<<< HEAD
     getSkills(this: SR5Actor): SR5Actor['system']['skills'] {
         return this.system.skills;
     }
 
     getActiveSkills(this: SR5Actor): SR5Actor['system']['skills']['active'] {
         return this.system.skills.active;
+=======
+    getSkills(this: SR5Actor): SR5Actor['skills']['named'] {
+        console.error('TODO: tamif - skills used to return a list of skills, this would break API');
+        return this.skills.named;
+    }
+
+    getActiveSkills(this: SR5Actor): SR5Actor['skills']['active'] {
+        console.error('TODO: tamif - skills used to return a list of skills, this would break API');
+        return this.skills.active;
+>>>>>>> c5d10ff8a (Refactored functinality into SkillFlow)
     }
 
     getMasterUuid(): string | undefined {
@@ -841,6 +864,7 @@ export class SR5Actor<SubType extends Actor.ConfiguredSubType = Actor.Configured
     /**
      * Find a skill either by id or label.
      *
+<<<<<<< HEAD
      * Skills are mapped by an id, which can be a either a lower case name (legacy skills) or a short uid (custom, language, knowledge).
      * Legacy skills use their name as the id, while not having a name set on the SkillField.
      * Custom skills use an id and have their name set, however no label. This goes for active, language and knowledge.
@@ -849,12 +873,16 @@ export class SR5Actor<SubType extends Actor.ConfiguredSubType = Actor.Configured
      *       clear this function up.
      *
      * @param id Either the searched id, name or translated label of a skill
+=======
+     * @param name Either the name or translated label (not the SR5.<label>-string)
+>>>>>>> c5d10ff8a (Refactored functinality into SkillFlow)
      * @param options .byLabel when true search will try to match given skillId with the translated label
      */
     getSkill(this: SR5Actor, id: string, options?: { byLabel?: boolean, rollData?: SR5Actor['system'] }): SkillFieldType | undefined {
         if (options?.byLabel)
             return this.getSkillByLabel(id);
 
+<<<<<<< HEAD
         const rollData = options?.rollData ?? this.getRollData();
 
         const skills = rollData?.skills ?? this.getSkills();
@@ -877,6 +905,14 @@ export class SR5Actor<SubType extends Actor.ConfiguredSubType = Actor.Configured
         }
 
         return this.getSkillByLabel(id);
+=======
+        console.error('TODO: tamif - Support for skill in getRollData');
+        return this.skills.named.get(name);
+        // const rollData = options?.rollData ?? this.getRollData();
+
+        // const skills = rollData?.skills ?? this.getSkills();
+        // return skills.get(name) ?? this.getSkillByLabel(name);
+>>>>>>> c5d10ff8a (Refactored functinality into SkillFlow)
     }
 
     /**

@@ -1,8 +1,35 @@
 import { SkillRules } from "../../rules/SkillRules";
 import { PartsList } from "../../parts/PartsList";
 import { FLAGS, SYSTEM_NAME } from "../../constants";
+<<<<<<< HEAD
 import { SkillFieldType } from "src/module/types/template/Skills";
 
+=======
+import { KnowledgeSkillCategory, SkillFieldType } from "src/module/types/template/Skills";
+import { SR5Item } from "@/module/item/SR5Item";
+import { Translation } from "@/module/utils/strings";
+
+// A skill storage structure for easier access to character skill items.
+export interface Skills {
+    // quick access based on name and label.
+    named: Map<string, SR5Item<'skill'>>
+    localized: Map<string, SR5Item<'skill'>>
+    // sorted lists for sheet display.
+    active: SR5Item<'skill'>[]
+    language: SR5Item<'skill'>[]
+    knowledge: {
+        academic: SR5Item<'skill'>[]
+        professional: SR5Item<'skill'>[]
+        street: SR5Item<'skill'>[]
+        interests: SR5Item<'skill'>[]
+    }
+};
+
+/**
+ * Handle functionality between actors and their skills.
+ */
+// TODO: tamif - refactor into object style
+>>>>>>> c5d10ff8a (Refactored functinality into SkillFlow)
 export class SkillFlow {
     /**
      * Handle everything around how a skill should be defaulted
@@ -48,4 +75,98 @@ export class SkillFlow {
     static isLegacySkill(skill: SkillFieldType): boolean {
         return !SkillFlow.isCustomSkill(skill);
     }
+<<<<<<< HEAD
 }
+=======
+
+    static prepareActorSkills(items: SR5Item<'skill'>[]): Skills {
+        const skills = SkillFlow.getDefaultActorSkills();
+
+        // Sort skills into types.
+        for (const item of items) {
+            if(item.system.type !== 'skill') continue;
+
+            const skillType = item.system.skill.category as string;
+            // TODO: tamif - assert skillType to always exist.
+            if (!Object.hasOwn(skills, skillType)) continue;
+
+            // TODO: tamif - should SR5Actor already localize or should we outload this to the sheet class
+            //               as it is a display issue and not a data issue. Same with sorting.
+            skills.named.set(item.name, item);
+            skills.localized.set(SkillFlow.localizeSkillName(item.name), item);
+
+            if (skillType === 'knowledge') {
+                const skillKnowledgeType = item.system.skill.knowledgeType
+                // TODO: tamif - assert no missing knowledge type
+                skills.knowledge[skillKnowledgeType as KnowledgeSkillCategory].push(item);
+            } else {
+            // TODO: tamif - resolve linter error
+                skills[skillType]!.push(item);
+            }
+        }
+
+        return skills;
+    }
+
+    /**
+     * Alphabetically sort skills either by their translated label. Should a skill not have one, use the name as a
+     * fallback.
+     *
+     * Sorting should be aware of UTF-8, however please blame JavaScript if it's not. :)
+     *
+     * @param skills
+     * @param asc Set to true for ascending sorting order and to false for descending order.
+     * @return Sorted Skills given by the skills parameter
+     */
+    static sortSkills(skills: SR5Item<'skill'>[], asc = true) {
+        // Filter entries instead of values to have a store of ids for easy rebuild.
+        const sortedSkills = skills.sort((a, b) => {
+            const comparatorA = SkillFlow.localizeSkillName(a.name);
+            const comparatorB = SkillFlow.localizeSkillName(b.name);
+            // Use String.localeCompare instead of the > Operator to support other alphabets.
+            if (asc)
+                return comparatorA.localeCompare(comparatorB) === 1 ? 1 : -1;
+            else
+                return comparatorA.localeCompare(comparatorB) === 1 ? -1 : 1;
+        });
+
+        const sortedSkillsObject = {};
+        sortedSkills.forEach(skill => {
+            const translated = SkillFlow.localizeSkillName(skill.name);
+            sortedSkillsObject[translated] = skill;
+        });
+
+        return sortedSkillsObject;
+    }
+
+    /**
+     * Translate the skill name into a localized version
+     */
+    static localizeSkillName(name: string) {
+        // TODO: tamif - handle error cases (empty) and transform name to label strucutre. check action translate.
+        const label = `SR5.Skills.${name}` as Translation;
+        return game.i18n.localize(label);
+    }
+
+    /**
+     * Prepare a default data structure for skill items that allows to
+     * better retrieve them compared to a flat skill item list.
+     */
+    static getDefaultActorSkills(): Skills {
+        return {
+            // quick access based on name and label.
+            named: new Map(),
+            localized: new Map(),
+            // sorted lists for sheet display.
+            active: [],
+            language: [],
+            knowledge: {
+                academic: [],
+                professional: [],
+                street: [],
+                interests: [],
+            }
+        };
+    }
+}
+>>>>>>> c5d10ff8a (Refactored functinality into SkillFlow)
