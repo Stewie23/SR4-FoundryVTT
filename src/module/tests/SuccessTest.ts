@@ -13,7 +13,7 @@ import { ActionFlow } from "../item/flows/ActionFlow";
 import { TestDialog, TestDialogListener } from "../apps/dialogs/TestDialog";
 import { CORE_NAME, FLAGS, SR, SYSTEM_NAME } from "../constants";
 import { DamageApplicationFlow } from '../actor/flows/DamageApplicationFlow';
-import { EdgeChatActions } from './chatMessage/EdgeChatActions';
+import { EdgeChatActions } from '../chatMessage/EdgeChatActions';
 
 
 
