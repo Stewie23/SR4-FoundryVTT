@@ -21,11 +21,13 @@ import { ActionRollType, DamageType, MinimalActionType } from "../types/item/Act
 import { DeepPartial } from "fvtt-types/utils";
 import { PackActionFlow } from "../item/flows/PackActionFlow";
 import { SkillTest } from "./SkillTest";
+import { MatrixTest } from "./MatrixTest";
 
 const TESTS: Record<string, any> = {
   [SuccessTest.name]: SuccessTest,
   [SkillTest.name]: SkillTest,
   [OpposedTest.name]: OpposedTest,
+  [MatrixTest.name]: MatrixTest,
 };
 
 
