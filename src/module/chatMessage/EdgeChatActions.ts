@@ -1,4 +1,4 @@
-import { ChatTestAction } from "../tests/SuccessTest";
+import type { ChatTestAction } from '../tests/SuccessTest'; // path adjust as needed
 
 export const EdgeChatActions: ChatTestAction[] = [
   {
