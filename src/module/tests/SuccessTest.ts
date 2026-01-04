@@ -1798,14 +1798,12 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
             applyGmOnlyContent: GmOnlyMessageContentFlow.applyGmOnlyContent(this.actor),
 
             // ✅ NEW: inline chat action buttons (Edge etc.)
-            chatActions: EdgeChatActions
-                .filter((a) => a.visible(this))
-                .map((a) => ({
-                    id: a.id,
-                    label: a.label,
-                    icon: a.icon,
-                    disabled: !a.enabled(this)
-                })),
+            chatActions: EdgeChatActions.map((a) => ({
+                id: a.id,
+                label: a.label,
+                icon: a.icon,
+                disabled: !a.enabled(this)
+            })),
 
             // Effects that should be shown in this tests message for manual drag & drop application.
             effects: [] as SR5ActiveEffect[]
