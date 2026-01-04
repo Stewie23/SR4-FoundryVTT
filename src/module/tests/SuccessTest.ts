@@ -2080,7 +2080,7 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
         const deleteOption = options.pop();
 
         options.push({
-            name: game.i18n.localize('SR5.PushTheLimit'),
+            name: game.i18n.localize('SR5.UseEdge'),
             callback: pushTheLimit,
             condition: true,
             icon: '<i class="fas fa-meteor"></i>'
