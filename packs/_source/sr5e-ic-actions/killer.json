@@ -3,7 +3,7 @@
   "folder": null,
   "name": "Killer",
   "type": "action",
-  "img": "systems/shadowrun5e/dist/icons/digital-trace.svg",
+  "img": "systems/sr4/dist/icons/digital-trace.svg",
   "system": {
     "description": {
       "value": "",

@@ -217,7 +217,7 @@ export const registerSystemSettings = () => {
         scope: 'world',
         config: true,
         type: String,
-        default: 'systems/shadowrun5e/dist/icons/importer/'
+        default: 'systems/sr4/dist/icons/importer/'
     });
 
     /**

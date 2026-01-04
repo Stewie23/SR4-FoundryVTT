@@ -19,7 +19,7 @@ services:
           propagation: 'Z'
       - type: bind
         source: .
-        target: /data/Data/systems/shadowrun5e/
+        target: /data/Data/systems/sr4/
         bind:
           propagation: 'Z'
     environment:

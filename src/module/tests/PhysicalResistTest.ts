@@ -38,7 +38,7 @@ export class PhysicalResistTest extends SuccessTest<PhysicalResistTestData> {
         const armor = this.actor?.getArmor();
         if(armor?.hardened){
             data.hitsIcon = {
-                icon: "systems/shadowrun5e/dist/icons/bell-shield.svg",
+                icon: "systems/sr4/dist/icons/bell-shield.svg",
                 tooltip: "SR5.ArmorHardenedFull",
             };
         }
