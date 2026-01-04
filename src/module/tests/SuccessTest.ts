@@ -13,6 +13,9 @@ import { ActionFlow } from "../item/flows/ActionFlow";
 import { TestDialog, TestDialogListener } from "../apps/dialogs/TestDialog";
 import { CORE_NAME, FLAGS, SR, SYSTEM_NAME } from "../constants";
 import { DamageApplicationFlow } from '../actor/flows/DamageApplicationFlow';
+import { EdgeChatActions } from './chatMessage/EdgeChatActions';
+
+
 
 import ModifierTypes = Shadowrun.ModifierTypes;
 
@@ -130,6 +133,16 @@ export interface SuccessTestMessageData {
     data: SuccessTestData,
     rolls: SR5Roll[]
 }
+
+export interface ChatTestAction {
+  id: string;
+  label: Translation;
+  icon: string;
+  visible(test: SuccessTest): boolean;
+  enabled(test: SuccessTest): boolean;
+  execute(test: SuccessTest): Promise<void>;
+}
+
 
 /**
  * General handling of Shadowrun 5e success tests as well as their FoundryVTT representation.
@@ -1782,11 +1795,22 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
             // Some message segments are only meant for the gm, when the gm is the one creating the message.
             // When this test doesn't use an actor, don't worry about hiding anything.
             applyGmOnlyContent: GmOnlyMessageContentFlow.applyGmOnlyContent(this.actor),
-            
+
+            // ✅ NEW: inline chat action buttons (Edge etc.)
+            chatActions: EdgeChatActions
+                .filter((a) => a.visible(this))
+                .map((a) => ({
+                    id: a.id,
+                    label: a.label,
+                    icon: a.icon,
+                    disabled: !a.enabled(this)
+                })),
+
             // Effects that should be shown in this tests message for manual drag & drop application.
             effects: [] as SR5ActiveEffect[]
-        }
+        };
     }
+
 
     /**
      * Indicate if this test can be used to show the item description.
@@ -1958,6 +1982,24 @@ export class SuccessTest<T extends SuccessTestData = SuccessTestData> {
         $(html).find('.result-action').on('click', this._castResultAction.bind(this));
         $(html).find('.chat-select-link').on('click', this._selectSceneToken.bind(this));
         $(html).find('.test-action').on('click', this._castTestAction.bind(this));
+        $(html).find('.chat-test-action').on('click', async (ev) => {
+            ev.preventDefault();
+            ev.stopPropagation();
+
+            const element = $(ev.currentTarget);
+            if (element.attr('disabled')) return;
+
+            const actionId = element.data('action');
+            const messageId = element.closest('.chat-message').data('messageId');
+
+            const test = await TestCreator.fromMessage(messageId);
+            if (!test) return;
+
+            const action = EdgeChatActions.find(a => a.id === actionId);
+            if (!action || !action.enabled(test)) return;
+
+            await action.execute(test);
+        });
 
         DamageApplicationFlow.handleRenderChatMessage(message, html, data);
 

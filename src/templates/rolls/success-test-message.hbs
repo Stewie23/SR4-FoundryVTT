@@ -117,7 +117,18 @@
             </div>
             {{/if}}
             {{/if}}
-            
+
+            {{!-- ✅ NEW: Inline test actions (Edge etc.) --}}
+            {{#if chatActions.length}}
+            <div class="card-buttons chat-test-actions">
+                {{#each chatActions}}
+                <div class="button chat-test-action" data-action="{{this.id}}" {{#if this.disabled}}disabled{{/if}}>
+                    <i class="{{this.icon}}"></i>
+                    {{localize this.label}}
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}        
         </div>
     </div>
     {{#if test.usingManualRoll}}
