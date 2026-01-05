@@ -7,7 +7,7 @@ import { ChummerFileXML, CompendiumKey, Constants } from './Constants';
 import CompendiumCollection = foundry.documents.collections.CompendiumCollection;
 
 /**
- * The most basic Chummer item data importer, designed to handle one or more Chummer5a data <type>.xml files.
+ * The most basic Chummer item data importer, designed to handle one or more Chummer data <type>.xml files.
  */
 export abstract class DataImporter {
     /**
@@ -61,25 +61,6 @@ export abstract class DataImporter {
 
     /**
      * Parses an array of input data into an array of output items using a specified parser.
-     * 
-     * @template TInput - The type of the input data to be parsed.
-     * @template TOutput - The type of the parsed output items.
-     * 
-     * @param inputs - An array of input data to be parsed.
-     * @param options - Configuration options for parsing:
-     *   - `compendiumKey`: The key to identify the compendium to be used.
-     *   - `parser`: An object with a `Parse` method to transform input data into output items.
-     *   - `filter`: (Optional) A function to filter input data before parsing.
-     *   - `injectActionTests`: (Optional) A function to modify or enhance parsed items.
-     *   - `errorPrefix`: (Optional) A prefix for error messages when parsing fails.
-     * 
-     * @returns A promise that resolves to an array of parsed output items.
-     * 
-     * @remarks
-     * - The function first ensures the specified compendium is loaded.
-     * - Each input is filtered (if a filter is provided) and parsed using the provided parser.
-     * - If parsing fails, an error notification is displayed with the provided or default error prefix.
-     * - Optionally, additional actions can be injected into parsed items using `injectActionTests`.
      */
     protected static async ParseItems<TInput extends ParseData>(
         inputs: TInput[],
@@ -92,12 +73,16 @@ export abstract class DataImporter {
         }
     ): Promise<void> {
         const { compendiumKey, parser, filter, injectActionTests, documentType } = options;
+
         const itemMap = new Map<CompendiumKey, (Actor.CreateData | Item.CreateData)[]>();
         const compendiums: Partial<Record<CompendiumKey, CompendiumCollection<'Actor' | 'Item'>>> = {};
-        const dataInput = filter ? inputs.filter(x => {
-            try { return filter(x); }
-            catch (e) { console.error("Error:\n", e, "\nData:\n", x); return false; }
-        }) : inputs;
+
+        const dataInput = filter
+            ? inputs.filter(x => {
+                try { return filter(x); }
+                catch (e) { console.error("Error:\n", e, "\nData:\n", x); return false; }
+            })
+            : inputs;
 
         let counter = 0;
         let current = 0;
@@ -107,44 +92,41 @@ export abstract class DataImporter {
         for (const data of dataInput) {
             try {
                 current += 1;
+
+                const name = data?.name?._TEXT || "Unknown";
+
                 progressBar.update({
                     pct: current / total,
-                    message: `${documentType} (${current}/${total}) Parsing: ${data?.name?._TEXT || "Unknown"}`,
+                    message: `${documentType} (${current}/${total}) Parsing: ${name}`,
                 });
 
-                // --- SR4-safe: id can be missing in some Chummer exports ---
-                const rawName = data?.name?._TEXT || "Unknown";
+                // --- SR4-safe: <id> can be missing in some Chummer exports ---
+                const rawGuid = (data as any)?.id?._TEXT as string | undefined;
 
-                // Prefer real Chummer GUID if present, otherwise build a deterministic fallback
-                const rawGuid = data?.id?._TEXT;
+                // Deterministic fallback so re-import does not duplicate when no GUID exists
                 const fallbackKey = [
-                rawName,
-                data?.category?._TEXT ?? "",
-                data?.type?._TEXT ?? "",
-                data?.source?._TEXT ?? "",
-                data?.page?._TEXT ?? "",
+                    name,
+                    (data as any)?.source?._TEXT ?? "",
+                    (data as any)?.page?._TEXT ?? "",
                 ].join("|");
 
-                // If there's no GUID, create a stable pseudo-id from the fallbackKey
-                // (requires a helper; see below)
                 const id = rawGuid
-                ? IH.guidToId(rawGuid)
-                : IH.stableStringToId(fallbackKey);
+                    ? IH.guidToId(rawGuid)
+                    : IH.stableStringToId(fallbackKey);
 
                 const key = compendiumKey(data);
                 const compendium = compendiums[key] ??= (await IH.GetCompendium(key));
 
                 if (!this.overrideDocuments && compendium.index.has(id)) {
-                IH.setItem(key, rawName, id);
-                continue;
+                    IH.setItem(key, name, id);
+                    continue;
                 }
 
                 const item = await parser.Parse(data, key);
                 injectActionTests?.(item as Item.CreateData);
 
-                item._id = id;
-                IH.setItem(key, rawName, id);
-
+                (item as any)._id = id;
+                IH.setItem(key, name, id);
 
                 counter++;
 
@@ -154,9 +136,10 @@ export abstract class DataImporter {
                 console.error("Error:\n", error, "\nData:\n", data);
                 ui.notifications?.error(`Failed parsing ${documentType}: ${data?.name?._TEXT ?? "Unknown"}`);
             }
-        };
+        }
 
         progressBar.remove();
+
         const notification = ui.notifications?.info(`${documentType}: Creating ${counter} documents`, { permanent: true });
 
         for (const [key, docs] of itemMap.entries()) {
