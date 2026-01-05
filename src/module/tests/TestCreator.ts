@@ -22,12 +22,14 @@ import { DeepPartial } from "fvtt-types/utils";
 import { PackActionFlow } from "../item/flows/PackActionFlow";
 import { SkillTest } from "./SkillTest";
 import { MatrixTest } from "./MatrixTest";
+import { RangedAttackTest } from "./RangedAttackTest";
 
 const TESTS: Record<string, any> = {
   [SuccessTest.name]: SuccessTest,
   [SkillTest.name]: SkillTest,
   [OpposedTest.name]: OpposedTest,
   [MatrixTest.name]: MatrixTest,
+  [RangedAttackTest.name]: RangedAttackTest,
 };
 
 
