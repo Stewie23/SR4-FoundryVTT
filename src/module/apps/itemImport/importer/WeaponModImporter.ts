@@ -24,17 +24,17 @@ export class WeaponModImporter extends DataImporter {
     // 2) Import SR4 mod definitions (<mods><mod>...</mod></mods>) as Weapon_Mod items
     const mods = IH.getArray((jsonObject as any)?.mods?.mod) as WeaponModDefinition[];
     if (mods.length) {
-      await WeaponModImporter.ParseItems<WeaponModDefinition>(
-        mods,
+      await WeaponModImporter.ParseItems<any>(
+        mods as any,
         {
-          compendiumKey: () => "Weapon_Mod",
-          parser: new WeaponModParser(),
-          injectActionTests: item => {
+            compendiumKey: () => "Weapon_Mod",
+            parser: new WeaponModParser(),
+            injectActionTests: item => {
             UpdateActionFlow.injectActionTestsIntoChangeData(item.type, item, item);
-          },
-          documentType: "Weapon Mod"
+            },
+            documentType: "Weapon Mod"
         }
-      );
+     );
     }
   }
 }
