@@ -124,11 +124,31 @@ export interface Weapon {
     altnameonpage?: OneOrMany<Empty>;
 };
 
+export interface Mod {
+  name: { _TEXT: string };
+  category?: { _TEXT: string };
+  rating?: { _TEXT: string };
+  slots?: { _TEXT: string };
+  conceal?: { _TEXT: string };
+  avail?: { _TEXT: string };
+  cost?: { _TEXT: string };        // may be "Weapon Cost"
+  ammobonus?: { _TEXT: string };
+  source?: { _TEXT: string };
+  page?: { _TEXT: string };
+}
+
+
 export interface WeaponsSchema {
     $: { xmlns: ""; "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"; "xsi:schemaLocation": "http://www.w3.org/2001/XMLSchema weapons.xsd"; };
     accessories: {
         accessory: Many<Accessory>;
     };
+
+      /** SR4 weapon mod definitions */
+    mods?: {
+        mod: Many<Mod>;
+    };
+
     categories: {
         category: Many<{ _TEXT: string; $: { blackmarket: "Weapons"; gunneryspec?: "Artillery" | "Ballistic" | "Energy" | "Rocket"; translate?: string; type: string; }; }>;
     };
