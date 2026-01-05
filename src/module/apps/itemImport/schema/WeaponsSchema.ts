@@ -125,24 +125,23 @@ export interface Weapon {
 };
 
 export interface WeaponModDefinition {
-  // not in XML, but required by ParseData-based import pipeline
   id: { _TEXT: string };
-
   name: { _TEXT: string };
 
-  // ParseData strictness: required (matches other Mod types in the union)
   category: { _TEXT: string };
   avail: { _TEXT: string };
   source: { _TEXT: string };
-  page: { _TEXT: string };
 
-  // SR4 mod fields
+  // IMPORTANT: must match ParseData/Mod expectation
+  page: { _TEXT: `${number}` | "?" };
+
   rating?: { _TEXT: string };
   slots?: { _TEXT: string };
   conceal?: { _TEXT: string };
-  cost: { _TEXT: IntegerString | string; };            
-  ammobonus?: { _TEXT: `${number}` };    // numeric string
+  cost: { _TEXT: IntegerString | string };
+  ammobonus?: { _TEXT: `${number}` };
 }
+
 
 
 
