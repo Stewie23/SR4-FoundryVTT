@@ -1,9 +1,7 @@
 import { Parser, SystemType } from "../Parser";
-import { Accessory, WeaponModDefinition } from "../../schema/WeaponsSchema";
+import { ParseData } from "../Types";
 import { CompendiumKey } from "../../importer/Constants";
 import { ImportHelper as IH } from "../../helper/ImportHelper";
-
-type ModOrAccessory = Accessory | WeaponModDefinition;
 
 function text(v: any, fallback = ""): string {
   if (v == null) return fallback;
@@ -21,11 +19,12 @@ function num(v: any, fallback = 0): number {
 export class WeaponModParser extends Parser<"modification"> {
   protected readonly parseType = "modification";
 
-  protected override getSystem(jsonData: ModOrAccessory) {
+  protected override getSystem(jsonData: ParseData) {
+    const data = jsonData as any; // Accessory OR WeaponModDefinition
     const system = this.getBaseSystem();
 
-    // Accessories may have mount points; SR4 mods typically do not.
-    const mountText = text((jsonData as any).mount, "");
+    // Accessories may have mount points; mods typically do not.
+    const mountText = text(data.mount, "");
     if (mountText) {
       const mount = mountText.toLowerCase().split("/")[0] || "";
       system.mount_point = mount as SystemType<"modification">["mount_point"];
@@ -34,46 +33,51 @@ export class WeaponModParser extends Parser<"modification"> {
     system.type = "weapon";
 
     // Some accessories define these; SR4 mods usually don't.
-    system.rc = num((jsonData as any).rc, 0);
-    system.accuracy = num((jsonData as any).accuracy, 0);
+    system.rc = num(data.rc, 0);
+    system.accuracy = num(data.accuracy, 0);
 
-    // --- SR4 mod fields: preserve for display / later rules work ---
-    // Not all systems have dedicated fields for these; keeping them in importFlags is safe.
-    // (Your base Parser already creates importFlags; we just add extra keys.)
+    // --- Preserve SR4 mod fields for display / later rules work ---
+    // These fields don't necessarily exist in the SR5 data model; stash safely.
     (system as any)._sr4 = {
-      slots: num((jsonData as any).slots, 0),
-      ammoBonus: num((jsonData as any).ammobonus, 0),
-      costRaw: text((jsonData as any).cost, ""), // can be "Weapon Cost"
-      categoryRaw: text((jsonData as any).category, ""),
+      slots: num(data.slots, 0),
+      ammoBonus: num(data.ammobonus, 0),
+      costRaw: text(data.cost, ""),      // can be "Weapon Cost"
+      categoryRaw: text(data.category, "")
     };
 
     return system;
   }
 
-  protected override setImporterFlags(entity: Item.CreateData, jsonData: ModOrAccessory): void {
+  protected override setImporterFlags(entity: Item.CreateData, jsonData: ParseData): void {
     super.setImporterFlags(entity, jsonData);
 
-    const mount = text((jsonData as any).mount, "");
-    const category = text((jsonData as any).category, "");
+    const data = jsonData as any;
 
-    // For accessories: group by mount. For mods: use category or "Weapon Mod".
+    const mount = text(data.mount, "");
+    const category = text(data.category, "");
+
+    // For accessories: group by mount. For mods: use category or fallback.
     entity.system!.importFlags!.category = mount || category || "Weapon Mod";
 
     // Preserve SR4-only bits in importFlags too (easy to access in templates)
-    const slots = num((jsonData as any).slots, 0);
-    const ammoBonus = num((jsonData as any).ammobonus, 0);
-    const costRaw = text((jsonData as any).cost, "");
+    const slots = num(data.slots, 0);
+    const ammoBonus = num(data.ammobonus, 0);
+    const costRaw = text(data.cost, "");
 
     (entity.system!.importFlags as any).slots = slots;
     (entity.system!.importFlags as any).ammoBonus = ammoBonus;
-    if (costRaw && isNaN(Number(costRaw))) {
+
+    // Only store costRaw if it isn't numeric (e.g. "Weapon Cost")
+    if (costRaw && !Number.isFinite(Number(costRaw))) {
       (entity.system!.importFlags as any).costRaw = costRaw;
     }
   }
 
-  protected override async getFolder(jsonData: ModOrAccessory, compendiumKey: CompendiumKey): Promise<Folder> {
-    const mountText = text((jsonData as any).mount, "");
-    const categoryText = text((jsonData as any).category, "Weapon Mod");
+  protected override async getFolder(jsonData: ParseData, compendiumKey: CompendiumKey): Promise<Folder> {
+    const data = jsonData as any;
+
+    const mountText = text(data.mount, "");
+    const categoryText = text(data.category, "Weapon Mod");
 
     const rootFolder = "Weapon-Mod";
 
