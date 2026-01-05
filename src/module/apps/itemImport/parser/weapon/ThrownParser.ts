@@ -36,6 +36,9 @@ export class ThrownParser extends WeaponParserBase {
         const rangeCategory = jsonData.range?._TEXT || jsonData.category._TEXT;
         system.thrown.ranges = DataDefaults.createData('range', this.GetRangeDataFromImportedCategory(rangeCategory));
 
+        // SR4 thrown weapons use STR-based ranges
+        system.thrown.ranges.attribute = 'strength';
+
         system.thrown.blast = this.GetBlast(system, jsonData);
 
         return system;

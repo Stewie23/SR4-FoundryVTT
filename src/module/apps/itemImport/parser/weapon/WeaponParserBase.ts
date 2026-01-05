@@ -236,9 +236,9 @@ export class WeaponParserBase extends Parser<'weapon'> {
         if (!systemRangeCategory) return;
 
         return {
-            ...SR5.weaponRangeCategories[systemRangeCategory].ranges,
-            category: systemRangeCategory,
-            attribute: 'agility',
+        ...SR5.weaponRangeCategories[systemRangeCategory].ranges,
+        category: systemRangeCategory,
+        attribute: '', // SR4: fixed ranges, no x attribute
         };
     }
 
