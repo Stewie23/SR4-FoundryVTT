@@ -125,20 +125,27 @@ export interface Weapon {
 };
 
 export interface WeaponModDefinition {
-  // not in XML, but required by ParseData-based import pipeline
-  id?: { _TEXT: string }
+    // not in XML, but required by ParseData-based import pipeline
+    id?: { _TEXT: string };
 
-  name: { _TEXT: string };
-  category?: { _TEXT: string };
-  rating?: { _TEXT: string };
-  slots?: { _TEXT: string };
-  conceal?: { _TEXT: string };
-  avail?: { _TEXT: string };
-  cost?: { _TEXT: string };        // may be "Weapon Cost"
-  ammobonus?: { _TEXT: string };
-  source?: { _TEXT: string };
-  page?: { _TEXT: string };
+    name: { _TEXT: string };
+    category?: { _TEXT: string };
+
+    // you can keep these as string, but see optional tightening below
+    rating?: { _TEXT: string };
+    slots?: { _TEXT: string };
+    conceal?: { _TEXT: string };
+
+    avail: { _TEXT: string };
+    cost?: { _TEXT: string };        // may be "Weapon Cost"
+
+    // ✅ important: must be numeric-string type to satisfy ParseData constraint
+    ammobonus?: { _TEXT: `${number}` };
+
+    source: { _TEXT: string };
+    page: { _TEXT: string };
 }
+
 
 
 export interface WeaponsSchema {
