@@ -17,6 +17,21 @@ export class ImportHelper {
     static nameToId: Partial<Record<CompendiumKey, Record<string, string>>> = {};
     static idToName: Partial<Record<CompendiumKey, Record<string, string>>> = {};
 
+      /** Read XML text value whether represented as `{_TEXT:"x"}` or plain string/number */
+    static text(v: any, fallback = ""): string {
+        if (v == null) return fallback;
+        if (typeof v === "object" && "_TEXT" in v) return String((v as any)._TEXT ?? fallback);
+        return String(v);
+    }
+
+    /** Read number from XML text; handles "-", "—", empty, bad numbers */
+    static num(v: any, fallback = 0): number {
+        const s = ImportHelper.text(v, "").trim();
+        if (!s || s === "-" || s === "—") return fallback;
+        const n = Number(s);
+        return Number.isFinite(n) ? n : fallback;
+    }
+
     /**
      * Ensures the provided value is returned as an array.
      * If the value is already an array, it is returned as-is.
