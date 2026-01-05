@@ -1,9 +1,9 @@
 import { Parser, SystemType } from "../Parser";
-import { Accessory, Mod } from "../../schema/WeaponsSchema";
+import { Accessory, WeaponModDefinition } from "../../schema/WeaponsSchema";
 import { CompendiumKey } from "../../importer/Constants";
 import { ImportHelper as IH } from "../../helper/ImportHelper";
 
-type ModOrAccessory = Accessory | Mod;
+type ModOrAccessory = Accessory | WeaponModDefinition;
 
 function text(v: any, fallback = ""): string {
   if (v == null) return fallback;

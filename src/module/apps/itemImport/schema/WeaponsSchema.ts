@@ -124,7 +124,10 @@ export interface Weapon {
     altnameonpage?: OneOrMany<Empty>;
 };
 
-export interface Mod {
+export interface WeaponModDefinition {
+  // not in XML, but required by ParseData-based import pipeline
+  id?: { _TEXT: string }
+
   name: { _TEXT: string };
   category?: { _TEXT: string };
   rating?: { _TEXT: string };
@@ -146,7 +149,7 @@ export interface WeaponsSchema {
 
       /** SR4 weapon mod definitions */
     mods?: {
-        mod: Many<Mod>;
+        mod: Many<WeaponModDefinition>;
     };
 
     categories: {
