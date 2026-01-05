@@ -32,6 +32,21 @@ export class ImportHelper {
         return Number.isFinite(n) ? n : fallback;
     }
 
+    // ImportHelper.ts
+    static stableStringToId(input: string): string {
+    // Foundry has a stable hash helper in modern versions; if not, use a simple hash.
+    // This produces a 16-char hex-ish id (keepId expects string id).
+    let h1 = 0x811c9dc5; // FNV-1a 32-bit
+    for (let i = 0; i < input.length; i++) {
+        h1 ^= input.charCodeAt(i);
+        h1 = Math.imul(h1, 0x01000193);
+    }
+    // Pad to 16 chars by repeating / mixing; good enough for deterministic IDs.
+    const hex = (h1 >>> 0).toString(16).padStart(8, "0");
+    return (hex + hex).slice(0, 16);
+    }
+
+
     /**
      * Ensures the provided value is returned as an array.
      * If the value is already an array, it is returned as-is.

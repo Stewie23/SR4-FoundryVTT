@@ -112,20 +112,39 @@ export abstract class DataImporter {
                     message: `${documentType} (${current}/${total}) Parsing: ${data?.name?._TEXT || "Unknown"}`,
                 });
 
-                const id = IH.guidToId(data.id._TEXT);
+                // --- SR4-safe: id can be missing in some Chummer exports ---
+                const rawName = data?.name?._TEXT || "Unknown";
+
+                // Prefer real Chummer GUID if present, otherwise build a deterministic fallback
+                const rawGuid = data?.id?._TEXT;
+                const fallbackKey = [
+                rawName,
+                data?.category?._TEXT ?? "",
+                data?.type?._TEXT ?? "",
+                data?.source?._TEXT ?? "",
+                data?.page?._TEXT ?? "",
+                ].join("|");
+
+                // If there's no GUID, create a stable pseudo-id from the fallbackKey
+                // (requires a helper; see below)
+                const id = rawGuid
+                ? IH.guidToId(rawGuid)
+                : IH.stableStringToId(fallbackKey);
+
                 const key = compendiumKey(data);
                 const compendium = compendiums[key] ??= (await IH.GetCompendium(key));
 
                 if (!this.overrideDocuments && compendium.index.has(id)) {
-                    IH.setItem(key, data.name._TEXT, id);
-                    continue;
+                IH.setItem(key, rawName, id);
+                continue;
                 }
 
-                const item = await parser.Parse(data, key);                
+                const item = await parser.Parse(data, key);
                 injectActionTests?.(item as Item.CreateData);
 
                 item._id = id;
-                IH.setItem(key, data.name._TEXT, id);
+                IH.setItem(key, rawName, id);
+
 
                 counter++;
 
