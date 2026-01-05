@@ -144,4 +144,6 @@ export abstract class Parser<SubType extends SystemEntityType> {
   }
 
   protected getBaseSystem(createData: SystemConstructorArgs<SubType> = {}) {
-    return DataDefaults.baseSyst
+    return DataDefaults.baseSystemData<SubType>(this.parseType, createData);
+  }
+}
