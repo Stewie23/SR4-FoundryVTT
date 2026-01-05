@@ -46,34 +46,47 @@ export class WeaponParserBase extends Parser<'weapon'> {
 
     protected override async getItems(jsonData: Weapon): Promise<Item.Source[]> {
         const rawAccessories = (jsonData as any)?.accessories?.accessory;
-        if (!rawAccessories) return [];
+        const rawMods = (jsonData as any)?.mods?.mod;
 
-        const accessories = IH.getArray(rawAccessories);
+        // If neither exist, nothing to embed
+        if (!rawAccessories && !rawMods) return [];
+
+        const accessories = rawAccessories ? IH.getArray(rawAccessories) : [];
+        const mods = rawMods ? IH.getArray(rawMods) : [];
 
         // Build list of names robustly (SR4 + SR5)
-        const accessoriesNames = accessories
+        const accessoryNames = accessories
             .map(a => WeaponParserBase.getAccessoryName(a))
             .filter(n => n.length > 0);
 
-        if (accessoriesNames.length === 0) return [];
+        // SR4 mods are usually simple strings: <mod>Laser Sight</mod>
+        const modNames = mods
+            .map(m => WeaponParserBase.getAccessoryName(m)) // reuse: handles string / {_TEXT} / name
+            .filter(n => n.length > 0);
 
-        const foundItems = await IH.findItems('Weapon_Mod', accessoriesNames);
+        const wantedNames = [...accessoryNames, ...modNames];
+        if (wantedNames.length === 0) return [];
+
+        const foundItems = await IH.findItems("Weapon_Mod", wantedNames);
         const itemMap = new Map(foundItems.map(({ name_english, ...i }) => [name_english, i]));
 
+        const weaponName = (jsonData as any)?.name?._TEXT ?? "Unknown";
+
         const result: Item.Source[] = [];
+
+        // --- accessories (existing behavior) ---
         for (const accessory of accessories) {
             const name = WeaponParserBase.getAccessoryName(accessory);
             if (!name) continue;
 
             const item = itemMap.get(name);
-
             if (!item) {
-                console.warn(`[Accessory Missing]\nWeapon: ${(jsonData as any)?.name?._TEXT ?? 'Unknown'}\nAccessory: ${name}`);
+                console.warn(`[Accessory Missing]\nWeapon: ${weaponName}\nAccessory: ${name}`);
                 continue;
             }
 
             item._id = foundry.utils.randomID();
-            const system = item.system as SystemType<'modification'>;
+            const system = item.system as SystemType<"modification">;
             system.technology.equipped = true;
 
             // Only exists on SR5-style accessories; SR4 simple accessory strings have no rating
@@ -83,8 +96,30 @@ export class WeaponParserBase extends Parser<'weapon'> {
             result.push(item);
         }
 
+        // --- mods (NEW) ---
+        for (const mod of mods) {
+            const name = WeaponParserBase.getAccessoryName(mod); // reuse normalization
+            if (!name) continue;
+
+            const item = itemMap.get(name);
+            if (!item) {
+                console.warn(`[Mod Missing]\nWeapon: ${weaponName}\nMod: ${name}`);
+                continue;
+            }
+
+            item._id = foundry.utils.randomID();
+            const system = item.system as SystemType<"modification">;
+            system.technology.equipped = true;
+
+            // SR4 mods in weapons.xml don't have per-weapon rating here (just the name),
+            // so we intentionally do NOT set system.technology.rating.
+
+            result.push(item);
+        }
+
         return result;
     }
+
 
     private GetSkill(weaponJson: Weapon): string {
         const useskill = (weaponJson as any)?.useskill?._TEXT;
